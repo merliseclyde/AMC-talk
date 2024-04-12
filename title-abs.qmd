@@ -1,0 +1,10 @@
+
+Title: In Search of Basu's Elephants
+
+Abstract
+
+Bayesian inference under model uncertainty typically utilizes some form of stochastic sampling from a a potentially high dimensional, but finite population of models.  In this talk, we discuss how Markov Chain Monte Carlo may be viewed through the lense of Probability Proportional to Size (PPS) sampling from the finite population sampling perspective.  We present a new adaptive independent Metropolis-Hastings algorithm and illustrate how it can also be used for adaptive importance sampling. This opens up the use of alternative estimators for population quantities under Bayesian Model Averaging based on the Horivitz-Thompson, Hájek and related estimators with theoretical improvements over classic ergodic averages based on Monte Carlo frequencies.  We discuss practical considerations and caveats for high dimensions, with the goal of avoiding disasters such as in Basu's famous circus example.
+
+
+
+

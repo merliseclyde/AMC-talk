@@ -1,0 +1,199 @@
+---
+title: "Keynote_Florida"
+format: revealjs
+---
+
+
+
+```{r}
+#| echo: false
+library(BAS)
+```
+
+
+## Trees & PPS
+
+story about PPS as undergrad
+image of PPS sampling in forestry
+do not measure all trees  (UG releif!)
+
+# Forestry to Stats -> KC
+
+Bayesian Experimential Design 
+
+importance of prior information
+
+# Variable Selection
+
+Importance sampling - approx to posterior in Orthogonal design.  (conditionally indpendent; RB possible )
+
+Ergodic Averages versus using acumulated knowledge of sampled marginals.  (renormalized vs MC freq)
+
+Harmonic Mean equivalent to Hansen Huriwtz estimator in PPS sampling (samping basaed on posterior of models)  
+
+Let $\rho_i$ be the probability of selecting $M_i$
+Estimate of Normalizing constant 
+$T = \sum_i^N m(\gamma_i)$ 
+
+Models samples from $\rho_i$ using the Hansen-Huriwtz estimator
+
+$$
+\hat{T} = \frac{1}{n}\sum_i^n \frac{m(\gamma_i)}{\rho_i}
+$$
+If we have "perfect" samples from the posterior then $$\rho_i = m(\gamma_i)/T$$, but since $T$ is unknown, we can apply the ratio estimator
+$$
+\hat{T} = \frac{\frac1 n \sum_i^n \frac{m(\gamma_i)}{\rho_i}}{ \frac1 n \sum_i^n \frac{1}{\rho_i}} =  \left[\frac 1 n  \sum_i \frac{1}{m(\gamma_i)} \right]^{-1}
+$$
+which is the harmonic mean estimator.  While unbiased is highly unstable
+
+Express as a function of the Unique values
+$$
+\hat{T} = \frac{ \sum_i^N n_i\frac{m(\gamma_i)}{\rho_i}}{ \frac1 n \sum_i^n \frac{n_i}{\rho_i}} 
+$$
+
+
+Can improve upon that with the use of Rao-Blackwellization but computational complexity precludes use!
+
+
+
+Sampoing wor approximate posterior
+
+Importance Sampling vs Horivitz Thomposn estimator
+
+Horivitz-Thompson:  sampling with replacement but us just the unique  labels
+
+
+
+
+Fisher consistency. Rao-Blackewell. (DA -> RB ?)
+
+completeness?
+
+## Basu's Elephants
+
+bias as a bugaboo with IS/HT
+
+Dumbo meme -> wrong model
+
+review Ghosh recap; Rao-Blackewell
+
+Bannerjee modern take https://arxiv.org/pdf/2306.10635.pdf  Justifies HT as Bayes 
+Zio - Legacy of Basu https://link.springer.com/article/10.1007/s13171-023-00327-5
+
+Little, R. (2022). Bayes, buttressed by design-based ideas, is the best overarching paradigm
+for sample survey inference. Survey Methodology 48, 257–281. https://www150.statcan.gc.ca/n1/en/pub/12-001-x/2022002/article/00001-eng.pdf?st=WfLlbHn8
+Talk https://lshtm.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=e59d434e-f035-4f0e-b5f4-af5e00ca9772
+
+
+Sanchez & Sanchez 2005 https://dl-acm-org.proxy.lib.duke.edu/doi/pdf/10.1145/1113316.1113320
+
+## Model Based
+
+log linear
+
+Resolution V 2P -k designs
+
+what do we get?
+
+Sanchez & Sanchez 2005 https://dl-acm-org.proxy.lib.duke.edu/doi/pdf/10.1145/1113316.1113320
+
+```{r}
+require("mgcv")
+```
+
+```{r}
+des = FFdes(15)
+des.bin = (des + 1)/2
+```
+
+```{r}
+require("BAS")
+
+```
+
+```{r}
+data(UScrime, package="MASS")
+crime.bic <- bas.lm(log(y) ~ log(M) + So + log(Ed) +
+  log(Po1) + log(Po2) +
+  log(LF) + log(M.F) + log(Pop) + log(NW) +
+  log(U1) + log(U2) + log(GDP) + log(Ineq) +
+  log(Prob) + log(Time),
+  data = UScrime, n.models = 2^15, prior = "g-prior", alpha = nrow(UScrime),
+  modelprior = beta.binomial(1, 1),
+  method = "deterministic")
+
+model.space = which.matrix(crime.bic$which, crime.bic$n.vars)[,-1]
+```
+
+
+```{r}
+ms.index = apply(model.space, 1, function(x)  paste0(as.character(x), collapse=""))
+des.index = apply(des.bin, 1, function(x)  paste(as.character(x), collapse=""))
+subsample = ms.index %in% des.index
+
+```
+
+```{r}
+logm = crime.bic$logmarg[subsample]
+df = data.frame(des)
+df[] <- lapply( df, factor) 
+df$logm = crime.bic$logmarg[subsample]
+ff.fit = lm(logm ~ .^2, data=df)
+
+```
+
+
+## example under model of independence
+log m = \mu + \sum(gamma)
+## What Next
+
+sequential sampling (design choice)
+
+sampling + design
+
+estimates (HT  or other). https://resources.environment.yale.edu/content/documents/00001669/Horvitz-Thompson.pdf
+
+RB
+
+## benefits of Exploration
+
+starting points for parallel chains
+
+coupling and convergence
+
+avoid Hall of Mirrors (ie Bayes analysis of Bayes model based approach )
+
+## advantages
+
+fewer runs
+escape locale modes ? vs Gibbs
+
+
+## Successive Sampling
+
+https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-43/issue-2/Asymptotic-Theory-for-Successive-Sampling-with-Varying-Probabilities-Without-Replacement/10.1214/aoms/1177692620.full
+
+see adaptive normalized improvement Polson ref https://arxiv.org/pdf/2204.14121.pdf
+improves over HT/Hajek.
+## Example
+
+```{r}
+tecator_short <- read.table("~/Documents/Github/Griffen_et_al_Supplemental/Version3.0/tecator_short.txt")
+
+# Reshape the data
+tecator1 <- t(matrix(tecator_short, nrow = 125, ncol = 240))
+
+# Extract data and target
+data <- data.frame(tecator1[1:172, 1:100])
+target <- tecator1[1:172, 124]
+data$target <- target
+```
+
+```{r}
+library(BAS)
+tecator.amc = bas.lm(target ~ ., data=data, prior="gprior", alpha = 100, method = "AMCMC", 
+                     burnin.iterations = 10000,
+                     MCMC.iterations = 10000,
+                     delta = 0.01)
+```
+
