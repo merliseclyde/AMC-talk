@@ -155,13 +155,40 @@ estimates (HT  or other). https://resources.environment.yale.edu/content/documen
 
 RB
 
+## Model Based
+
+![Elephant](turtles_all_the_way_down.jpeg)
+
+Statistical Modelling Agency has ad out for help sampling models
+Circus statistician applies (admits they know are a bit intimidated about measuring human models, neglicting to mention their failure with elephants ) 
+
+Owner: oh silly  these are statistical models 
+(oh says the statistian still eager for a job, not realizing that this was way more difficult)
+
+But reads up and discovers MCMC & BMA. 
+
+Shicked and Appalled they discover that the standard approaches just use the Monte Carlo frequencies!  (meme - simpsons)
+
+I've got this meme 
+
+![I got this](https://tenor.com/view/trustme-yes-festivus-gif-18095876)
+
+
+Using their knowledge of HT rediscovers the infamous harmonic mean estimator
+
+
+in process discovered Nott & Kohn ACMC 
+adapt to Global Sampler
+
+can't have the infinite regret of designing a "MCMC" algorithm to learn the sampling probabilities of how to 
+avoid Hall of Mirrors (ie Bayes analysis of Bayes model based approach )
+
 ## benefits of Exploration
 
 starting points for parallel chains
 
 coupling and convergence
 
-avoid Hall of Mirrors (ie Bayes analysis of Bayes model based approach )
 
 ## advantages
 
@@ -175,25 +202,3 @@ https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-43/i
 
 see adaptive normalized improvement Polson ref https://arxiv.org/pdf/2204.14121.pdf
 improves over HT/Hajek.
-## Example
-
-```{r}
-tecator_short <- read.table("~/Documents/Github/Griffen_et_al_Supplemental/Version3.0/tecator_short.txt")
-
-# Reshape the data
-tecator1 <- t(matrix(tecator_short, nrow = 125, ncol = 240))
-
-# Extract data and target
-data <- data.frame(tecator1[1:172, 1:100])
-target <- tecator1[1:172, 124]
-data$target <- target
-```
-
-```{r}
-library(BAS)
-tecator.amc = bas.lm(target ~ ., data=data, prior="gprior", alpha = 100, method = "AMCMC", 
-                     burnin.iterations = 10000,
-                     MCMC.iterations = 10000,
-                     delta = 0.01)
-```
-
