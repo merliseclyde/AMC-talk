@@ -5,3 +5,5 @@
 .RdataTmp
 
 /.quarto/
+tecator-det.Rdata
+tecator-probs-truth.dat
