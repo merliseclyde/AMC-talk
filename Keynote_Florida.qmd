@@ -159,8 +159,15 @@ RB
 
 ![Elephant](turtles_all_the_way_down.jpeg)
 
-Statistical Modelling Agency has ad out for help sampling models
-Circus statistician applies (admits they know are a bit intimidated about measuring human models, neglicting to mention their failure with elephants ) 
+several years later: 
+Statistical Modelling Agency has ad out for help sampling models 
+
+Circus statistician applies (admits they know are a bit intimidated about measuring human models, 
+
+![ModelMatrix](model_ageny.png)
+
+
+neglicting to mention their failure with elephants ) 
 
 Owner: oh silly  these are statistical models 
 (oh says the statistian still eager for a job, not realizing that this was way more difficult)
