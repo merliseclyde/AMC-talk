@@ -1,6 +1,36 @@
 ---
-title: "Keynote_Florida"
-format: revealjs
+title: "In Search of Basu's Elephants"
+author: "Merlise Clyde"
+subtitle: |
+ | Conference Honoring Basu and Bahadur
+ | Theory and Foundations of Statistics in the Era of Big Data
+institute: "Duke University"
+date: "4/21/2024"
+format: 
+  revealjs:
+    theme: [simple, custom.scss]
+    slide-number: true
+    incremental: true
+    scrollable: false
+    controls: true
+    fragments: true
+    preview-links: auto
+    smaller: true
+    logo: ../../img/Dukelogo.jpg
+    chalkboard: 
+      boardmarker-width: 1
+      chalk-width: 2
+      chalk-effect: 0
+    embed-resources: false
+html-math-method:
+  method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"    
+editor: 
+  markdown: 
+    wrap: 72
+execute: 
+  echo: false
+number-sections: false
 ---
 
 
@@ -11,19 +41,68 @@ library(BAS)
 ```
 
 
-## Trees & PPS
+## Basu's Elephants
 
-story about PPS as undergrad
-image of PPS sampling in forestry
-do not measure all trees  (UG releif!)
 
-# Forestry to Stats -> KC
+{{< include macros.qmd >}}
 
-Bayesian Experimential Design 
 
-importance of prior information
+:::: {.columns}
 
-# Variable Selection
+::: {.column width="60%"}
+Circus Owner plans to ship his 50 elephants
+
+- needs an approximate total weight of the 50 elephants
+- Sambo is a typical elephant of average weight
+- decides to take 50 $\times$ Sambo's weight as an estimate of the total weight
+:::
+
+::: {.column width="40%"}
+![](img/circus-ship.jpeg){width="70%"}
+:::
+
+::::
+
+## Sampling Design 
+
+:::: {.columns}
+
+::: {.column width="60%"}
+Circus Statistician is shocked!
+
+- we need an approximate sampling design to create an unbiased estimator
+- sample Sambo with probability $99/100$
+- the rest of the elephants with probability $1/4900$
+
+:::
+
+::: {.column width="40%"}
+![](img/shocked-statistician.png){width="70%"}
+:::
+
+::::
+## Unbiased Estimation
+
+:::: {.columns}
+
+::: {.column width="60%"}
+
+Everyone was happy when Sambo was selected
+- Circus Owner proposes using $50 \times$ Sambo's current weight
+- Circus Statistician insists on using the Horvitz-Thompson Estimator
+   - unique hyperadmissible estimator in the class of all generalized polynomial unbiased estimators!
+- HT estimate is Sambo's weight $\div$ probability Sambo was selected  -or- W $\times 100/99$
+- BUt what if the largest elephant Jumbo had been selected?
+- HT would lead to Jumbo's weight $\times 4900/1$!
+- and thus the Circus statistician need a new job!
+:::
+
+::: {.column width="40%"}
+![](img/basu-elephant.png){width="70%"}
+:::
+
+::::
+## Variable Selection
 
 Importance sampling - approx to posterior in Orthogonal design.  (conditionally indpendent; RB possible )
 
@@ -69,6 +148,52 @@ Fisher consistency. Rao-Blackewell. (DA -> RB ?)
 
 completeness?
 
+# several years later: 
+Statistical Modelling Agency has ad out for help sampling models 
+
+Circus statistician applies (admits they know are a bit intimidated about measuring human models, 
+
+![ModelMatrix](img/model_agency.png)
+
+
+neglicting to mention their failure with elephants ) 
+
+Owner: oh silly  these are statistical models 
+(oh says the statistian still eager for a job, not realizing that this was way more difficult)
+
+# But reads up and discovers MCMC & BMA. 
+
+Shicked and Appalled they discover that the standard approaches just use the Monte Carlo frequencies!  (meme - simpsons)
+
+I've got this meme 
+
+![I got this](https://tenor.com/view/trustme-yes-festivus-gif-18095876)
+
+
+Using their knowledge of HT rediscovers the infamous harmonic mean estimator
+
+
+in process discovered Nott & Kohn ACMC 
+# adapt to Global Sampler
+
+can't have the infinite regret of designing a "MCMC" algorithm to learn the sampling probabilities of how to 
+avoid Hall of Mirrors (ie Bayes analysis of Bayes model based approach )
+
+![Turtles](img/turtles_all_the_way_down.jpeg)
+
+## advantages
+
+fewer runs
+escape locale modes ? vs Gibbs
+
+
+## Successive Sampling
+
+https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-43/issue-2/Asymptotic-Theory-for-Successive-Sampling-with-Varying-Probabilities-Without-Replacement/10.1214/aoms/1177692620.full
+
+see adaptive normalized improvement Polson ref https://arxiv.org/pdf/2204.14121.pdf
+improves over HT/Hajek.
+
 ## Basu's Elephants
 
 bias as a bugaboo with IS/HT
@@ -97,11 +222,10 @@ what do we get?
 
 Sanchez & Sanchez 2005 https://dl-acm-org.proxy.lib.duke.edu/doi/pdf/10.1145/1113316.1113320
 
-```{r}
-require("mgcv")
-```
 
 ```{r}
+require("mgcv")
+#| eval: FALSE
 des = FFdes(15)
 des.bin = (des + 1)/2
 ```
@@ -112,6 +236,7 @@ require("BAS")
 ```
 
 ```{r}
+#| eval: FALSE
 data(UScrime, package="MASS")
 crime.bic <- bas.lm(log(y) ~ log(M) + So + log(Ed) +
   log(Po1) + log(Po2) +
@@ -127,6 +252,7 @@ model.space = which.matrix(crime.bic$which, crime.bic$n.vars)[,-1]
 
 
 ```{r}
+#| eval: FALSE
 ms.index = apply(model.space, 1, function(x)  paste0(as.character(x), collapse=""))
 des.index = apply(des.bin, 1, function(x)  paste(as.character(x), collapse=""))
 subsample = ms.index %in% des.index
@@ -134,6 +260,7 @@ subsample = ms.index %in% des.index
 ```
 
 ```{r}
+#| eval: FALSE
 logm = crime.bic$logmarg[subsample]
 df = data.frame(des)
 df[] <- lapply( df, factor) 
@@ -155,16 +282,13 @@ estimates (HT  or other). https://resources.environment.yale.edu/content/documen
 
 RB
 
-## Model Based
 
-![Elephant](turtles_all_the_way_down.jpeg)
-
-several years later: 
+# several years later: 
 Statistical Modelling Agency has ad out for help sampling models 
 
 Circus statistician applies (admits they know are a bit intimidated about measuring human models, 
 
-![ModelMatrix](model_ageny.png)
+![ModelMatrix](model_agency.png)
 
 
 neglicting to mention their failure with elephants ) 
@@ -172,7 +296,7 @@ neglicting to mention their failure with elephants )
 Owner: oh silly  these are statistical models 
 (oh says the statistian still eager for a job, not realizing that this was way more difficult)
 
-But reads up and discovers MCMC & BMA. 
+# But reads up and discovers MCMC & BMA. 
 
 Shicked and Appalled they discover that the standard approaches just use the Monte Carlo frequencies!  (meme - simpsons)
 
@@ -185,17 +309,12 @@ Using their knowledge of HT rediscovers the infamous harmonic mean estimator
 
 
 in process discovered Nott & Kohn ACMC 
-adapt to Global Sampler
+# adapt to Global Sampler
 
 can't have the infinite regret of designing a "MCMC" algorithm to learn the sampling probabilities of how to 
 avoid Hall of Mirrors (ie Bayes analysis of Bayes model based approach )
 
-## benefits of Exploration
-
-starting points for parallel chains
-
-coupling and convergence
-
+![Turtles](turtles_all_the_way_down.jpeg)
 
 ## advantages
 

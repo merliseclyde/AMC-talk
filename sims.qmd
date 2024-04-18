@@ -8,7 +8,12 @@ format: html
 editor: visual
 ---
 
-## Quarto
+## sims
+
+```{r}
+library(BAS)
+```
+
 
 ```{r}
 match.model = function(pop, methods, df.m) {
@@ -90,7 +95,6 @@ crime.det = bas.lm(log(y) ~ log(M) + So + log(Ed) + log(Po1) + log(Po2)
 df = data.frame(TRUTH=crime.det$probne0.RN,AIS = crime.ais$probne0.RN, AMCMC=crime.ais$probne0.MCMC, 
                 MCMC=crime.mcmc$probne0.MCMC)                  
 plot(df)
-
 cor(df)
 
 
@@ -102,7 +106,6 @@ plot(df.mod)
 
 ```
 
-
 ```{r}
 data(tecator, package="FuncNN")
 # Extract data and target
@@ -110,11 +113,18 @@ X <- tecator$absorp.fdata$data[1:172,]
 fat <- tecator$y$Fat[1:172] 
 data = data.frame(fat, X)
 
-subsamp = seq(1,100, by=4)
+subsamp = seq(1,100, by=5)
 p = length(subsamp)
 b.it = 2000000
 mc.it = 2000000
+n.models = 2^15
+```
+
+```{r}
+#| eval: FALSE
+
 set.seed(42)
+
 
 tecator.det = bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100,
                      method = "deterministic", thin = 100,
@@ -122,55 +132,108 @@ tecator.det = bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alph
                       MCMC.iterations = mc.it,
                       delta = 0.01, n.models = 2^p)
 
-df = data.frame(TRUTH = tecator.det$probne0)
 
-set.seed(42)
-tecator.IS = bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
+
+tecator.probne0 = data.frame(TRUTH=tecator.det$probne0)
+```
+
+```{r}
+#| eval: FALSE
+load("tecator-probs-truth.dat")
+load("tecator-det.Rdata")
+```
+
+```{r}
+system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
+                     method = "AMCMC", 
+                     burnin.iterations = b.it, thin = 100,
+                     MCMC.iterations = mc.it, lambda = 102,
+                     delta = 0.01, n.models = n.models, importance.sampling = FALSE))
+system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", 
+                      alpha = 100, method = "MCMC", 
+                     burnin.iterations = b.it, thin = 100,
+                     MCMC.iterations = mc.it,
+                     delta = 0.01, n.models = n.models))
+system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
                      method = "AMCMC", 
                      burnin.iterations = b.it, thin=100,
                      MCMC.iterations = mc.it,  lambda = 102, # renormalize = TRUE,
-                     delta = 0.01, n.models = 2^19, importance.sampling = TRUE)
-plot(tecator.IS$sampleprobs, tecator.IS$postprobs.RN)
+                     delta = 0.01, n.models = n.models, importance.sampling = TRUE))
+
+
+```
+
+
+```{r}
+NSIM = 25
+n.models = round(.05*2^p)
+
+time = matrix(NA, nrow = NSIM, ncol=3)
+bias.pip = matrix(NA, nrow = NSIM, ncol=3)
+mse.pip = matrix(NA, nrow = NSIM, ncol=3)
+
+bias.pp = matrix(NA, nrow = NSIM, ncol=3)
+mse.pp = matrix(NA, nrow = NSIM, ncol=3)
 
 set.seed(42)
-tecator.amc = bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
+for (i in 1:NSIM) {
+print(i)
+time[i, 1] = system.time(tecator.IS <- bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
                      method = "AMCMC", 
-                     burnin.iterations = 2000000, thin = 100,
-                     MCMC.iterations = 2000000, lambda = 102,
-                     delta = 0.01, n.models = 2^19, importance.sampling = FALSE)
-#plot(tecator.amc$sampleprobs, tecator.amc$postprobs.MCMC)
-#plot(tecator.amc$postprobs.RN, tecator.amc$postprobs.MCMC)
-#abline(0,1)
+                     burnin.iterations = b.it, thin=100,
+                     MCMC.iterations = mc.it,  lambda = 102, # renormalize = TRUE,
+                     delta = 0.01, n.models = n.models, importance.sampling = TRUE)
+)[2]
 
-plot(tecator.IS$probne0, tecator.amc$probne0)
+time[i,2] = system.time(tecator.amc <- bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
+                     method = "AMCMC", 
+                     burnin.iterations = b.it, thin = 100,
+                     MCMC.iterations = mc.it, lambda = 102,
+                     delta = 0.01, n.models = n.models, importance.sampling = FALSE)
+)[2]
 
-set.seed(42)
-tecator.mcmc = bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, method = "MCMC", 
+
+time[i,3] = system.time(tecator.mcmc <- bas.lm(fat ~ ., data=data[, c(subsamp,101)],
+                                               prior="g-prior", 
+                      alpha = 100, method = "MCMC", 
                      burnin.iterations = b.it, thin = 100,
                      MCMC.iterations = mc.it,
-                     delta = 0.01, n.models = 2^19)
-#plot(tecator.mcmc$postprobs.RN, tecator.mcmc$postprobs.MCMC)
+                     delta = 0.01, n.models = n.models)
+)[2]
 
-plot(tecator.mcmc$probne0.MCMC, tecator.IS$probne0)
-abline(0,1)
+tecator.probne0$HT <- tecator.IS$probne0
+tecator.probne0$AMC <-  tecator.amc$probne0.MCMC
+tecator.probne0$MCMC <-tecator.mcmc$probne0.MCMC
 
-tecator.probne0 = data.frame(TRUTH=tecator.det$probne0, HT = tecator.IS$probne0, AMC = tecator.amc$probne0.MCMC, 
-                             MCMC=tecator.mcmc$probne0.MCMC)
-plot(tecator.probne0)
-cor(tecator.probne0)
+
+bias.pip[i, ] <- apply(tecator.probne0,2, bias, tecator.probne0$TRUTH)[-1]
+mse.pip[i, ] <- apply(tecator.probne0,2, var, tecator.probne0$TRUTH, na.rm=TRUE)[-1]
+
 
 df.mod = data.frame(TRUTH = tecator.det$postprobs.RN, AIS=NA, AMCMC=NA, MCMC=NA)
 tecator.modelprobs = match.model(tecator.det, list(tecator.IS, tecator.amc, tecator.mcmc), df.mod)
+
+bias.pp[i,] <- apply(tecator.modelprobs,2, bias, tecator.modelprobs$TRUTH)[-1]
+mse.pp[i,] <- apply(tecator.modelprobs,2, mse, tecator.modelprobs$TRUTH, na.rm=TRUE)[-1]
+}
+```
+```{r}
+```
+
+
+```{r}
+plot.modprobs = function(x,y, ...) {
+  df = data.frame(x, y)
+  df = df[!is.na(y),]
+  plot(df, ...)
+  abline(0,1)
+}
+```
+
+```{r}
+plot.modprobs(tecator.modelprobs$AIS, tecator.modelprobs$TRUTH, xlab="TRUE", ylab = "AIS")
+
 plot(tecator.modelprobs)
 cor(tecator.modelprobs, use = "pair")
-
-```
-```{r}
-apply(tecator.modelprobs,2, bias, tecator.modelprobs$TRUTH)
-apply(tecator.modelprobs,2, var, tecator.modelprobs$TRUTH, na.rm=TRUE)
-```
-
-
-```{r}
 ```
 

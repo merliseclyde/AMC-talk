@@ -1,0 +1,164 @@
+\usepackage{xcolor}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\sgn}{sgn}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\Mb}{\mathbf{M}}
+\renewcommand{\P}{\mathbf{P}}
+\newcommand{\F}{\mathbf{F}}
+\newcommand{\R}{\textsf{R}}
+\newcommand{\mat}[1] {\mathbf{#1}}
+\newcommand{\E}{\textsf{E}}
+\newcommand{\SE}{\textsf{SE}}
+\newcommand{\SSE}{\textsf{SSE}}
+\newcommand{\RSS}{\textsf{RSS}}
+\newcommand{\FSS}{\textsf{FSS}}
+\renewcommand{\SS}{\textsf{SS}}
+\newcommand{\MSE}{\textsf{MSE}}
+\newcommand{\SSR}{\textsf{SSR}}
+\newcommand{\Be}{\textsf{Beta}}
+\newcommand{\St}{\textsf{St}}
+\newcommand{\Ca}{\textsf{C}}
+\newcommand{\Lv}{\textsf{Lévy}}
+\newcommand{\Exp}{\textsf{Exp}}
+\newcommand{\GDP}{\textsf{GDP}}
+\newcommand{\NcSt}{\textsf{NcSt}}
+\newcommand{\Bin}{\textsf{Bin}}
+\newcommand{\NB}{\textsf{NegBin}}
+\newcommand{\Mult}{\textsf{MultNom}}
+\renewcommand{\NG}{\textsf{NG}}
+\newcommand{\N}{\textsf{N}}
+\newcommand{\Ber}{\textsf{Ber}}
+\newcommand{\Poi}{\textsf{Poi}}
+\newcommand{\Gam}{\textsf{Gamma}}
+\newcommand{\BB}{\textsf{BB}}
+\newcommand{\BF}{\textsf{BF}}
+\newcommand{\Gm}{\textsf{G}}
+\newcommand{\Un}{\textsf{Unif}}
+\newcommand{\Ex}{\textsf{Exp}}
+\newcommand{\DE}{\textsf{DE}}
+\newcommand{\tr}{\textsf{tr}}
+\newcommand{\cF}{{\cal{F}}}
+\newcommand{\cL}{{\cal{L}}}
+\newcommand{\cI}{{\cal{I}}}
+\newcommand{\cB}{{\cal{B}}}
+\newcommand{\cP}{{\cal{P}}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\pperp}{\mathrel{{\rlap{$\,\perp$}\perp\,\,}}}
+\newcommand{\OFP}{(\Omega,\cF, \P)}
+\newcommand{\eps}{\boldsymbol{\epsilon}}
+\newcommand{\Psib}{\boldsymbol{\Psi}}
+\newcommand{\1}{\mathbf{1}_n}
+\newcommand{\gap}{\vspace{8mm}}
+\newcommand{\ind}{\mathrel{\mathop{\sim}\limits^{\rm ind}}}
+\newcommand{\iid}{\mathrel{\mathop{\sim}\limits^{\rm iid}}}
+\newcommand{\simiid}{\ensuremath{\mathrel{\mathop{\sim}\limits^{\rm
+iid}}}}
+\newcommand{\eqindis}{\mathrel{\mathop{=}\limits^{\rm D}}}
+\newcommand{\SSZ}{S_{zz}}
+\newcommand{\SZW}{S_{zw}}
+\newcommand{\Var}{\textsf{Var}}
+\newcommand{\corr}{\textsf{corr}}
+\newcommand{\diag}{\textsf{diag}}
+\newcommand{\var}{\textsf{var}}
+\newcommand{\Cov}{\textsf{Cov}}
+\newcommand{\Sam}{{\cal S}}
+\def\H{\mathbf{H}}
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\Y}{\mathbf{Y}}
+\newcommand{\tY}{\tilde{\mathbf{Y}}}
+\newcommand{\Yhat}{\hat{\mathbf{Y}}}
+\newcommand{\Yobs}{\mathbf{Y}_{{\cal S}}}
+\newcommand{\barYobs}{\bar{Y}_{{\cal S}}}
+\newcommand{\barYmiss}{\bar{Y}_{{\cal S}^c}}
+\def\bv{\mathbf{b}}
+\def\X{\mathbf{X}}
+\def\tX{\tilde{\mathbf{X}}}
+\def\x{\mathbf{x}}
+\def\xbar{\bar{\mathbf{x}}}
+\def\Xbar{\bar{\mathbf{X}}}
+\def\Xg{\mathbf{X}_{\boldsymbol{\gamma}}}
+\def\Ybar{\bar{\Y}}
+\def\ybar{\bar{y}}
+\def\y{\mathbf{y}}
+\def\Yf{\mathbf{Y_f}}
+\def\W{\mathbf{W}}
+\def\L{\mathbf{L}}
+\def\w{\mathbf{w}}
+\def\U{\mathbf{U}}
+\def\V{\mathbf{V}}
+\def\Q{\mathbf{Q}}
+\def\Z{\mathbf{Z}}
+\def\z{\mathbf{z}}
+\def\v{\mathbf{v}}
+\def\u{\mathbf{u}}
+
+\def\zero{\mathbf{0}}
+\def\one{\mathbf{1}}
+\newcommand{\taub}{\boldsymbol{\tau}}
+\newcommand{\betav}{\boldsymbol{\beta}}
+\newcommand{\alphav}{\boldsymbol{\alpha}}
+\newcommand{\bfomega}{\boldsymbol{\omega}}
+\newcommand{\bfchi}{\boldsymbol{\chi}}
+\newcommand{\bfLambda}{\boldsymbol{\Lambda}}
+\newcommand{\Lmea}{{\cal L}} 
+\newcommand{\scale}{\bflambda} 
+\newcommand{\Scale}{\bfLambda} 
+\newcommand{\bfscale}{\bflambda} 
+\newcommand{\mean}{\bfchi}
+\newcommand{\loc}{\bfchi}
+\newcommand{\bfmean}{\bfchi}
+\newcommand{\bfx}{\x}
+\renewcommand{\k}{g}
+\newcommand{\Gen}{{\cal G}}
+\newcommand{\Levy}{L{\'e}vy}
+\def\bfChi    {\boldsymbol{\Chi}}
+\def\bfOmega  {\boldsymbol{\Omega}}
+\newcommand{\Po}{\mbox{\sf P}}
+\newcommand{\A}{\mathbf{A}}
+\def\a{\mathbf{a}}
+\def\K{\mathbf{K}}
+\newcommand{\B}{\mathbf{B}}
+\def\b{\boldsymbol{\beta}}
+\def\bhat{\hat{\boldsymbol{\beta}}}
+\def\btilde{\tilde{\boldsymbol{\beta}}}
+\def\tb{\boldsymbol{\theta}}
+\def\bg{\boldsymbol{\beta_\gamma}}
+\def\bgnot{\boldsymbol{\beta_{(-\gamma)}}}
+\def\mub{\boldsymbol{\mu}}
+\def\tmub{\tilde{\boldsymbol{\mu}}}
+\def\muhat{\hat{\boldsymbol{\mu}}}
+\def\tb{\boldsymbol{\theta}}
+\def\tk{\boldsymbol{\theta}_k}
+\def\tj{\boldsymbol{\theta}_j}
+\def\Mk{\boldsymbol{{\cal M}}_k}
+\def\M{\boldsymbol{{\cal M}}}
+\def\Mj{\boldsymbol{{\cal M}}_j}
+\def\Mi{\boldsymbol{{\cal M}}_i}
+\def\Mg{{\boldsymbol{{\cal M}_\gamma}}}
+\def\Mnull{\boldsymbol{{\cal M}}_{N}}
+\def\gMPM{\boldsymbol{\gamma}_{\text{MPM}}}
+\def\gHPM{\boldsymbol{\gamma}_{\text{HPM}}}
+\def\Mfull{\boldsymbol{{\cal M}}_{F}}
+\def\tg{\boldsymbol{\theta}_{\boldsymbol{\gamma}}}
+\def\g{\boldsymbol{\gamma}}
+\def\eg{\boldsymbol{\eta}_{\boldsymbol{\gamma}}}
+\def\G{\mathbf{G}}
+\def\cM{\cal M}
+\def\D{\Delta}
+\def \shat{{\hat{\sigma}}^2}
+\def\uv{\mathbf{u}}
+\def\l {\lambda}
+\def\d{\delta}
+\def\Sigmab{\boldsymbol{\Sigma}}
+\def\Phib{\boldsymbol{\Phi}}
+\def\Lambdab{\boldsymbol{\Lambda}}
+\def\lambdab{\boldsymbol{\lambda}}
+\def\Mg{{\cal M}_\gamma}
+\def\S{{\cal{S}}}
+\def\qg{p_{\boldsymbol{\gamma}}}
+\def\pg{p_{\boldsymbol{\gamma}}}
+\def\T{\boldsymbol{\Theta}}
+\def\Tb{\boldsymbol{\Theta}}
+\def\t{\mathbf{t}}
