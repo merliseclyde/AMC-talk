@@ -6,7 +6,6 @@ subtitle: |
  | Conference Honoring Bahadur and Basu
  
 institute: "Duke University"
-date: "4/21/2024"
 format: 
   revealjs:
     theme: [simple, custom.scss]
