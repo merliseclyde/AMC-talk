@@ -10,7 +10,9 @@
 <link href="Keynote_Florida_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.450">
 
-  <title>Keynote_Florida</title>
+  <meta name="author" content="Merlise Clyde">
+  <meta name="dcterms.date" content="2024-04-21">
+  <title>In Search of Basu’s Elephants</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -33,6 +35,8 @@
   <link href="Keynote_Florida_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="Keynote_Florida_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="Keynote_Florida_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Keynote_Florida_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="Keynote_Florida_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="Keynote_Florida_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
@@ -324,109 +328,437 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Keynote_Florida</h1>
+  <h1 class="title">In Search of Basu’s Elephants</h1>
+  <p class="subtitle"></p><p>Theory and Foundations of Statistics in the Era of Big Data<br>
+Conference Honoring Bahadur and Basu</p><p></p>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Merlise Clyde 
+</div>
+        <p class="quarto-title-affiliation">
+            Duke University
+          </p>
+    </div>
 </div>
 
-</section>
-<section id="trees-pps" class="slide level2">
-<h2>Trees &amp; PPS</h2>
-<p>story about PPS as undergrad image of PPS sampling in forestry do not measure all trees (UG releif!)</p>
-</section>
-<section id="forestry-to-stats---kc" class="title-slide slide level1 center">
-<h1>Forestry to Stats -&gt; KC</h1>
-<p>Bayesian Experimential Design</p>
-<p>importance of prior information</p>
-</section>
-
-<section>
-<section id="variable-selection" class="title-slide slide level1 center">
-<h1>Variable Selection</h1>
-<p>Importance sampling - approx to posterior in Orthogonal design. (conditionally indpendent; RB possible )</p>
-<p>Ergodic Averages versus using acumulated knowledge of sampled marginals. (renormalized vs MC freq)</p>
-<p>Harmonic Mean equivalent to Hansen Huriwtz estimator in PPS sampling (samping basaed on posterior of models)</p>
-<p>Let <span class="math inline">\(\rho_i\)</span> be the probability of selecting <span class="math inline">\(M_i\)</span> Estimate of Normalizing constant <span class="math inline">\(T = \sum_i^N m(\gamma_i)\)</span></p>
-<p>Models samples from <span class="math inline">\(\rho_i\)</span> using the Hansen-Huriwtz estimator</p>
-<p><span class="math display">\[
-\hat{T} = \frac{1}{n}\sum_i^n \frac{m(\gamma_i)}{\rho_i}
-\]</span> If we have “perfect” samples from the posterior then <span class="math display">\[\rho_i = m(\gamma_i)/T\]</span>, but since <span class="math inline">\(T\)</span> is unknown, we can apply the ratio estimator <span class="math display">\[
-\hat{T} = \frac{\frac1 n \sum_i^n \frac{m(\gamma_i)}{\rho_i}}{ \frac1 n \sum_i^n \frac{1}{\rho_i}} =  \left[\frac 1 n  \sum_i \frac{1}{m(\gamma_i)} \right]^{-1}
-\]</span> which is the harmonic mean estimator. While unbiased is highly unstable</p>
-<p>Express as a function of the Unique values <span class="math display">\[
-\hat{T} = \frac{ \sum_i^N n_i\frac{m(\gamma_i)}{\rho_i}}{ \frac1 n \sum_i^n \frac{n_i}{\rho_i}}
-\]</span></p>
-<p>Can improve upon that with the use of Rao-Blackwellization but computational complexity precludes use!</p>
-<p>Sampoing wor approximate posterior</p>
-<p>Importance Sampling vs Horivitz Thomposn estimator</p>
-<p>Horivitz-Thompson: sampling with replacement but us just the unique labels</p>
-<p>Fisher consistency. Rao-Blackewell. (DA -&gt; RB ?)</p>
-<p>completeness?</p>
+  <p class="date">2024-04-21</p>
 </section>
 <section id="basus-elephants" class="slide level2">
 <h2>Basu’s Elephants</h2>
-<p>bias as a bugaboo with IS/HT</p>
-<p>Dumbo meme -&gt; wrong model</p>
-<p>review Ghosh recap; Rao-Blackewell</p>
-<p>Bannerjee modern take https://arxiv.org/pdf/2306.10635.pdf Justifies HT as Bayes Zio - Legacy of Basu https://link.springer.com/article/10.1007/s13171-023-00327-5</p>
-<p>Little, R. (2022). Bayes, buttressed by design-based ideas, is the best overarching paradigm for sample survey inference. Survey Methodology 48, 257–281. https://www150.statcan.gc.ca/n1/en/pub/12-001-x/2022002/article/00001-eng.pdf?st=WfLlbHn8 Talk https://lshtm.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=e59d434e-f035-4f0e-b5f4-af5e00ca9772</p>
-<p>Sanchez &amp; Sanchez 2005 https://dl-acm-org.proxy.lib.duke.edu/doi/pdf/10.1145/1113316.1113320</p>
-</section>
-<section id="model-based" class="slide level2">
-<h2>Model Based</h2>
-<p>log linear</p>
-<p>Resolution V 2P -k designs</p>
-<p>what do we get?</p>
-<p>Sanchez &amp; Sanchez 2005 https://dl-acm-org.proxy.lib.duke.edu/doi/pdf/10.1145/1113316.1113320</p>
-</section>
-<section id="example-under-model-of-independence" class="slide level2">
-<h2>example under model of independence</h2>
-<p>log m = + (gamma) ## What Next</p>
-<p>sequential sampling (design choice)</p>
-<p>sampling + design</p>
-<p>estimates (HT or other). https://resources.environment.yale.edu/content/documents/00001669/Horvitz-Thompson.pdf</p>
-<p>RB</p>
-</section>
-<section id="model-based-1" class="slide level2">
-<h2>Model Based</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="turtles_all_the_way_down.jpeg"></p>
-<figcaption>Elephant</figcaption>
-</figure>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>Circus Owner plans to ship his 50 elephants</p>
+<ul>
+<li class="fragment">needs an approximate total weight of the 50 elephants</li>
+<li class="fragment">Sambo is a typical elephant of average weight</li>
+<li class="fragment">decides to take 50 <span class="math inline">\(\times\)</span> Sambo’s current weight as an estimate of the total weight of his herd</li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="img/circus-ship.jpeg" style="width:70.0%"></p>
 </div>
-<p>Statistical Modelling Agency has ad out for help sampling models Circus statistician applies (admits they know are a bit intimidated about measuring human models, neglicting to mention their failure with elephants )</p>
-<p>Owner: oh silly these are statistical models (oh says the statistian still eager for a job, not realizing that this was way more difficult)</p>
-<p>But reads up and discovers MCMC &amp; BMA.</p>
-<p>Shicked and Appalled they discover that the standard approaches just use the Monte Carlo frequencies! (meme - simpsons)</p>
-<p>I’ve got this meme</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="https://tenor.com/view/trustme-yes-festivus-gif-18095876.png"></p>
-<figcaption>I got this</figcaption>
-</figure>
 </div>
-<p>Using their knowledge of HT rediscovers the infamous harmonic mean estimator</p>
-<p>in process discovered Nott &amp; Kohn ACMC adapt to Global Sampler</p>
-<p>can’t have the infinite regret of designing a “MCMC” algorithm to learn the sampling probabilities of how to avoid Hall of Mirrors (ie Bayes analysis of Bayes model based approach )</p>
 </section>
-<section id="benefits-of-exploration" class="slide level2">
-<h2>benefits of Exploration</h2>
-<p>starting points for parallel chains</p>
-<p>coupling and convergence</p>
+<section id="sampling-design" class="slide level2">
+<h2>Sampling Design</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>Circus Statistician is shocked!</p>
+<ul>
+<li class="fragment">we need a sampling design to create an unbiased estimator!</li>
+<li class="fragment">they compromised and came up with the following plan:
+<ul>
+<li class="fragment">sample Sambo with probability <span class="math inline">\(99/100\)</span></li>
+<li class="fragment">the rest of the elephants with probability <span class="math inline">\(1/4900\)</span></li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="img/shocked-statistician.png" style="width:70.0%"></p>
+</div>
+</div>
 </section>
-<section id="advantages" class="slide level2">
-<h2>advantages</h2>
-<p>fewer runs escape locale modes ? vs Gibbs</p>
+<section id="unbiased-estimation-horvitz-thompson" class="slide level2">
+<h2>Unbiased Estimation &amp; Horvitz-Thompson</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<p>Everyone was happy when Sambo was selected!</p>
+<ul>
+<li class="fragment">Circus Owner proposes using <span class="math inline">\(50 \times\)</span> Sambo’s current weight</li>
+<li class="fragment">Circus Statistician: we should use the Horvitz-Thompson Estimator (HT)
+<ul>
+<li class="fragment">unique hyper-admissible estimator in the class of all generalized polynomial unbiased estimators!</li>
+</ul></li>
+<li class="fragment">HT estimate is Sambo’s weight <span class="math inline">\(\div\)</span> probability Sambo was selected -or- W <span class="math inline">\(\times 100/99\)</span></li>
+<li class="fragment">But what if the largest elephant Jumbo had been selected? asked the Circus Owner</li>
+<li class="fragment">Well, said the sheepish statistician, HT would lead to Jumbo’s weight <span class="math inline">\(W \times 4900/1\)</span>!</li>
+<li class="fragment">and thus the Circus statistician lost their job (and became an instructor of statistics)!</li>
+</ul>
+</div><div class="column" style="width:30%;">
+<p><img data-src="img/basu-elephant.png" style="width:70.0%"></p>
+</div>
+</div>
 </section>
-<section id="successive-sampling" class="slide level2">
-<h2>Successive Sampling</h2>
-<p>https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-43/issue-2/Asymptotic-Theory-for-Successive-Sampling-with-Varying-Probabilities-Without-Replacement/10.1214/aoms/1177692620.full</p>
-<p>see adaptive normalized improvement Polson ref https://arxiv.org/pdf/2204.14121.pdf improves over HT/Hajek.</p>
-<div class="footer footer-default">
+<section id="several-years-later" class="slide level2">
+<h2>Several years later…</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="img/model_agency.png"></p>
+</div><div class="column" style="width:50%;">
+<p>Statistical Modelling Agency has ad out for help sampling models</p>
+<ul>
+<li class="fragment"><p>Circus statistician applies</p></li>
+<li class="fragment"><p>Agency: we want to implement Bayesian Model Averaging and need your help in sampling models and estimation</p></li>
+<li class="fragment"><p>Former Circus Statistician: I know all about sampling! Tell me more!</p></li>
+<li class="fragment"><p>and being an instructor of statistics does not pay enough</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="canonical-regression-model" class="slide level2">
+<h2>Canonical Regression Model</h2>
+<ul>
+<li class="fragment"><p>Observe response vector <span class="math inline">\(\mathbf{Y}\)</span> with predictor variables <span class="math inline">\(X_1 \dots X_p\)</span>.</p></li>
+<li class="fragment"><p>Model for data under a specific model <span class="math inline">\({\cal M}_\gamma\)</span>: <span class="math display">\[\begin{equation*}
+\mathbf{Y}\mid \alpha, \boldsymbol{\beta_\gamma}, \phi, {\cal M}_\gamma\sim \textsf{N}(\mathbf{1}_n\alpha + \mathbf{X}_{\boldsymbol{\gamma}}\boldsymbol{\beta_\gamma}, \mathbf{I}_n/\phi)
+\label{eq:linear.model}
+\end{equation*}\]</span></p></li>
+<li class="fragment"><p>Models <span class="math inline">\({\cal M}_\gamma\)</span> encoded by <span class="math inline">\(\boldsymbol{\gamma}= (\gamma_1, \ldots \gamma_p)^T\)</span> binary vector with <span class="math inline">\(\gamma_j = 1\)</span> indicating that <span class="math inline">\(X_j\)</span> is included in model <span class="math inline">\({\cal M}_\gamma\)</span> where <span class="math display">\[\begin{align*}
+\gamma_j = 0 &amp; \Leftrightarrow \beta_j = 0 \\
+\gamma_j = 1 &amp;  \Leftrightarrow \beta_j \neq 0
+\end{align*}\]</span></p></li>
+<li class="fragment"><p><span class="math inline">\(\mathbf{X}_{\boldsymbol{\gamma}}\)</span>: the <span class="math inline">\(n \times p_{\boldsymbol{\gamma}}\)</span> design matrix for model <span class="math inline">\({\cal M}_\gamma\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(\boldsymbol{\beta_\gamma}\)</span>: the <span class="math inline">\(p_{\boldsymbol{\gamma}}\)</span> vector of non-zero regression coefficients under <span class="math inline">\({\cal M}_\gamma\)</span></p></li>
+<li class="fragment"><p>intercept <span class="math inline">\(\alpha\)</span>, precision <span class="math inline">\(\phi\)</span> common to all models</p></li>
+</ul>
+</section>
+<section id="bayesian-model-averaging-bma" class="slide level2">
+<h2>Bayesian Model Averaging (BMA)</h2>
+<ul>
+<li class="fragment"><p>prior distributions on all unknowns <span class="math inline">\((\boldsymbol{\beta_\gamma}, \boldsymbol{\gamma}, \alpha, \phi)\)</span> and turn the Bayesian crank to get posterior distributions!</p></li>
+<li class="fragment"><p>key component is posterior distribution over models <span class="math display">\[
+p({\cal M}_\gamma\mid\ Y) = \frac {p(\mathbf{Y}\mid {\cal M}_\gamma) p({\cal M}_\gamma)} {\sum_{\boldsymbol{\gamma}\in \Gamma} p(\mathbf{Y}\mid {\cal M}_\gamma)p({\cal M}_\gamma)}
+\]</span></p></li>
+<li class="fragment"><p>for <strong>nice</strong> priors, we can integrate out the parameters <span class="math inline">\(\boldsymbol{\theta}_{\boldsymbol{\gamma}}= (\boldsymbol{\beta_\gamma}, \alpha, \phi)\)</span> to obtain the marginal likelihood of <span class="math inline">\({\cal M}_\gamma\)</span> which is proportional to <span class="math display">\[
+p(\mathbf{Y}\mid {\cal M}_\gamma) = \int p(\mathbf{Y}\mid \boldsymbol{\theta}_{\boldsymbol{\gamma}}, {\cal M}_\gamma)p(\boldsymbol{\theta}_{\boldsymbol{\gamma}}\mid {\cal M}_\gamma) d\boldsymbol{\theta}_{\boldsymbol{\gamma}}
+\]</span></p></li>
+<li class="fragment"><p>posterior distribution of quantities <span class="math inline">\(\Delta\)</span> of interest under BMA <span class="math display">\[
+\sum_{\boldsymbol{\gamma}\in \Gamma} p({\cal M}_\gamma\mid \mathbf{Y}) p(\Delta \mid \mathbf{Y}, {\cal M}_\gamma)
+\]</span></p></li>
+<li class="fragment"><p>estimations <span class="math inline">\(\textsf{E}[\mathbf{Y}]\)</span>, predictive distribution of <span class="math inline">\(\mathbf{Y}^*\)</span>, <span class="math inline">\(\gamma_j\)</span> (marginal inclusion probabilities)</p></li>
+</ul>
+</section>
+<section id="implementation" class="slide level2">
+<h2>Implementation</h2>
+<p>The Former Circus Statistician asked - “What if you can’t enumerate all of the models in <span class="math inline">\(\gamma\)</span>?</p>
+<ul>
+<li class="fragment"><p>With <span class="math inline">\(88\)</span> predictor variables there are <span class="math inline">\(2^{88} &gt; 3 \times 10^{26}\)</span> models!</p></li>
+<li class="fragment"><p>more than the number of stars (<span class="math inline">\(10^{24}\)</span>) in the universe!</p></li>
+</ul>
+<div class="fragment">
+<p><img data-src="img/dont-panic.png" style="width:70.0%"></p>
+</div>
+</section>
+<section id="sampling" class="slide level2">
+<h2>Sampling</h2>
+<p>Well, then we just use a sample, said the agency statistician</p>
+<ul>
+<li class="fragment"><p>simple random sampling with or without replacement doesn’t work very well (inefficient)</p></li>
+<li class="fragment"><p>Box used importance sampling in the 80’s, but that didn’t seem to scale</p></li>
+<li class="fragment"><p>non-random samples using Branch &amp; Bound, but those are biased (also does not scale)</p></li>
+<li class="fragment"><p>but then Bayesians discovered MCMC so Markov Chain Monte Carlo is now pretty standard for implementation of BMA</p></li>
+</ul>
+</section>
+<section id="mcmc" class="slide level2">
+<h2>MCMC</h2>
+<ul>
+<li class="fragment"><p>design a Markov Chain to transition through <span class="math inline">\(\Gamma\)</span> so that ultimately models are sampled proportional to their posterior probabilities <span class="math display">\[
+  p({\cal M}_\gamma\mid \mathbf{Y}) \propto p(\mathbf{Y}\mid {\cal M}_\gamma) p({\cal M}_\gamma)
+  \]</span></p></li>
+<li class="fragment"><p>propose a new model from <span class="math inline">\(q(\boldsymbol{\gamma}^* \mid \boldsymbol{\gamma})\)</span></p></li>
+<li class="fragment"><p>accept moving to <span class="math inline">\(\boldsymbol{\gamma}^*\)</span> with probability <span class="math display">\[
+\textsf{MH} = \max(1, \frac{p({\cal M}_\gamma* \mid \mathbf{Y})p({\cal M}_\gamma^*)/q(\boldsymbol{\gamma}^* \mid \boldsymbol{\gamma})}
+                {p({\cal M}_\gamma\mid \mathbf{Y})p({\cal M}_\gamma)/q(\boldsymbol{\gamma})})
+\]</span></p></li>
+<li class="fragment"><p>otherwise stay at model <span class="math inline">\({\cal M}_\gamma\)</span></p></li>
+<li class="fragment"><p>the normalizing constant is the same in the numerator and denominator so we just need <span class="math inline">\(p(\mathbf{Y}\mid {\cal M}_\gamma) p({\cal M}_\gamma)\)</span>!</p></li>
+</ul>
+</section>
+<section id="estimation-in-bma" class="slide level2">
+<h2>Estimation in BMA</h2>
+<p>The Former Circus Statistician asks: “So how do you estimate the probabilities of models?</p>
+<ul>
+<li class="fragment"><p>we just use the Monte Carlo frequencies of models or ergodic averages <span class="math display">\[\begin{align*}
+\widehat{p({\cal M}_\gamma\mid \mathbf{Y})}  &amp; = \frac{\sum_{t = 1}^T I({{\cal M}}_t = {\cal M}_\gamma)} {T} \\
+&amp; = \frac{\sum_{\boldsymbol{\gamma}\in S} n_{\boldsymbol{\gamma}} I({\cal M}_\gamma\in S)} {\sum n_{\boldsymbol{\gamma}}} \\
+\end{align*}\]</span></p></li>
+<li class="fragment"><p><span class="math inline">\(T\)</span> = # MCMC samples</p></li>
+<li class="fragment"><p><span class="math inline">\(S\)</span> is the collection of sampled models</p></li>
+<li class="fragment"><p><span class="math inline">\(n_{\boldsymbol{\gamma}}\)</span> is the frequency of model <span class="math inline">\({\cal M}_\gamma\)</span> in <span class="math inline">\(S\)</span></p></li>
+</ul>
+<div class="fragment">
+<ul>
+<li class="fragment">asymptotically unbiased</li>
+</ul>
+</div>
+</section>
+<section id="shocked-ii" class="slide level2">
+<h2>Shocked (II)</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="img/shocked-statistician.png" style="width:70.0%"></p>
+<p>What! You just the Monte Carlo frequencies! exclaimed the Former Circus Statistician</p>
+<ul>
+<li class="fragment">I don’t know much about Bayes, but that doesn’t seem particularly Bayesian!</li>
+</ul>
+</div><div class="column" style="width:60%;">
+<ul>
+<li class="fragment"><p>what happened to the (observed) marginal likelihoods <span class="math inline">\(\times\)</span> prior probabilities?</p></li>
+<li class="fragment"><p>since you are sampling from a finite population, can you use survey sampling estimates of <span class="math display">\[\sum_{\boldsymbol{\gamma}\in \Gamma } p(\mathbf{Y}\mid {\cal M}_\gamma) p({\cal M}_\gamma)\]</span> with the observed <span class="math inline">\(p(\mathbf{Y}\mid {\cal M}_\gamma) p({\cal M}_\gamma)\)</span>?</p></li>
+<li class="fragment"><p>Agency Statistician: We tried using <span class="math display">\[
+\widehat{p({\cal M}_\gamma\mid\ Y)} = \frac {p(\mathbf{Y}\mid {\cal M}_\gamma) p({\cal M}_\gamma)} {\sum_{\boldsymbol{\gamma}\in S} p(\mathbf{Y}\mid {\cal M}_\gamma)p({\cal M}_\gamma)}
+\]</span></p></li>
+<li class="fragment"><p>it’s biased in finite samples, but Fisher Consistent</p></li>
+<li class="fragment"><p>that’s why we need you!</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="inverse-probability-weighting" class="slide level2">
+<h2>Inverse Probability Weighting</h2>
+<p>Former Circus Statistician: Let’s try the Hansen-Hurwitz estimator in PPS sampling</p>
+<ul>
+<li class="fragment">Goal is to estimate <span class="math inline">\(C= \sum_i^N p(\mathbf{Y}\mid {{\cal M}}_i) p({{\cal M}}_i)\)</span></li>
+<li class="fragment">Let <span class="math inline">\(\rho_i\)</span> be the probability of selecting <span class="math inline">\({{\cal M}}_i\)</span></li>
+<li class="fragment">Hansen-Hurwitz or importance sampling estimate is <span class="math display">\[\hat{C} = \frac{1}{n}\sum_i^n \frac{ p(\mathbf{Y}\mid {{\cal M}}_i) p({{\cal M}}_i)}{\rho_i}
+\]</span></li>
+<li class="fragment">If we have “perfect” samples from the posterior then <span class="math display">\[\rho_i = \frac{p(\mathbf{Y}\mid {{\cal M}}_i)p({{\cal M}}_i)}{C}\]</span> and recover <span class="math inline">\(C\)</span>!</li>
+</ul>
+</section>
+<section id="self-normalized-importance-sampling" class="slide level2">
+<h2>Self-Normalized Importance Sampling</h2>
+<p>Since <span class="math inline">\(C\)</span> is unknown, we can apply the ratio estimator <span class="math display">\[
+\hat{C} = \frac{\frac1 n \sum_i^n \frac{p(\mathbf{Y}\mid {{\cal M}}_i) p({{\cal M}}_i)}{\rho_i}}{ \frac1 n \sum_i^n \frac{1}{\rho_i}} =  \left[ \sum_i \frac{1}{p(\mathbf{Y}\mid {{\cal M}}_i) p({{\cal M}}_i)} \right]^{-1}
+\]</span></p>
+<div class="fragment">
+<p>But this is the “infamous” harmonic mean estimator, said the Agency Statistician! While unbiased, it’s is highly unstable!</p>
+</div>
+<div class="fragment">
+<p>The Former Circus Statistician (hoping to keep this gig):</p>
+<ul>
+<li class="fragment"><p>Wait! - I know that the Horvitz-Thompson (HT) estimator which uses only the unique sampled values and not the frequencies</p></li>
+<li class="fragment"><p>HT dominates the Hansen-Hurwitz in terms of variance!</p></li>
+<li class="fragment"><p>but we can’t use MCMC…</p></li>
+</ul>
+</div>
+</section>
+<section id="proposal-distribution" class="slide level2">
+<h2>Proposal Distribution</h2>
+<p>Former Circus Statistician: So tell me more about <span class="math inline">\(q\)</span> in MCMC</p>
+<ul>
+<li class="fragment"><p>ratio <span class="math inline">\(\frac{p(\mathbf{Y}\mid {\cal M}_\gamma^*) p({\cal M}_\gamma^*)}{q({\cal M}_\gamma^*)}\)</span> looks like importance sampling</p></li>
+<li class="fragment"><p>what are choices for <span class="math inline">\(q({\cal M}_\gamma^* \mid {\cal M}_\gamma)\)</span>?</p></li>
+<li class="fragment"><p>what about independent proposals <span class="math inline">\(q({\cal M}_\gamma^*)\)</span>?</p></li>
+</ul>
+</section>
+<section id="adaptive-independent-metropolis" class="slide level2">
+<h2>Adaptive Independent Metropolis</h2>
+<p>Griffin et al (2021):</p>
+<ul>
+<li class="fragment"><p>Independent Metropolis Hastings <span class="math display">\[q(\boldsymbol{\gamma}) = \prod \pi_i^{\gamma_i} (1 - \pi_i)^{1-\gamma_i}\]</span></p></li>
+<li class="fragment"><p>Product of <strong>Independent</strong> Bernoullis</p></li>
+<li class="fragment"><p>Use adaptive Independent Metropolis Hastings to learn <span class="math inline">\(\pi_i\)</span> from past samples plus Rao-Blackwellization</p></li>
+<li class="fragment"><p>optimal for target of posterior where <span class="math inline">\(\gamma_j\)</span> are independent</p></li>
+<li class="fragment"><p>still uses Metropolis-Hastings Ratio to accept</p></li>
+<li class="fragment"><p>And they use Monte Carlo frequencies!</p></li>
+</ul>
+</section>
+<section id="factor-target" class="slide level2">
+<h2>Factor Target</h2>
+<ul>
+<li class="fragment"><p>The joint posterior distribution of <span class="math inline">\(\boldsymbol{\gamma}\)</span> (dropping <span class="math inline">\(\mathbf{Y}\)</span>) may be factored: <span class="math display">\[p({\cal M}_\gamma\mid \mathbf{Y}) \equiv p(\boldsymbol{\gamma}) = \prod_{j = 1}^p p(\gamma_j \mid \boldsymbol{\gamma}_{&lt;j})
+\]</span> where <span class="math inline">\(\boldsymbol{\gamma}_{&lt; j}\equiv \{\gamma_k\}\)</span> for <span class="math inline">\(k &lt; j\)</span> and <span class="math inline">\(p(\gamma_1 \mid \boldsymbol{\gamma}_{&lt;1}) \equiv p(\gamma_1)\)</span>.</p></li>
+<li class="fragment"><p>As <span class="math inline">\(\gamma_j\)</span> are binary, re-express as <span class="math display">\[\begin{equation*}
+p(\boldsymbol{\gamma}) = \prod_{j=1}^p(\rho_{j \mid &lt;j})^{\gamma_j}{(1-\rho_{j
+  \mid &lt;j})}^{1-\gamma_j}
+\end{equation*}\]</span> where <span class="math inline">\(\rho_{j \mid &lt;j} \equiv \Pr(\gamma_j = 1 \mid \boldsymbol{\gamma}_{&lt;j})\)</span> and <span class="math inline">\(\rho_{1 \mid &lt; 1} = \rho_1\)</span>, the marginal probability.</p></li>
+<li class="fragment"><p>Product of <strong>Dependent</strong> Bernoullis</p></li>
+</ul>
+</section>
+<section id="global-adaptive-mcmc-proposal" class="slide level2">
+<h2>Global Adaptive MCMC Proposal</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p>Factor proposal <span class="math display">\[q(\boldsymbol{\gamma}) = \prod_{j = 1}^p q(\gamma_j \mid \boldsymbol{\gamma}_{&lt;j}) = \prod_j \textsf{Ber}(\hat{\rho}_{j \mid &lt;j})
+\]</span></p>
+<ul>
+<li class="fragment"><p>Note: <span class="math inline">\(\Pr(\gamma_j = 1 \mid \boldsymbol{\gamma}_{&lt;j}) = \textsf{E}[\gamma_j = 1 \mid \boldsymbol{\gamma}_{&lt;j}]\)</span></p></li>
+<li class="fragment"><p>Fit a sequence of <span class="math inline">\(p\)</span> regressions <span class="math inline">\(\gamma_j\)</span> on <span class="math inline">\(\gamma_{&lt;j}\)</span> <span class="math display">\[\begin{align*}
+\gamma_1 &amp; = \mu_1 + \epsilon_1 \\
+\gamma_2  &amp; = \mu_2 + \beta_{2 1} (\gamma_1 - \mu_1) + \epsilon_2 \\
+\gamma_3 &amp; = \mu_3 + \beta_{3 1} (\gamma_1 -
+  \mu_1) + \beta_{3 2} (\gamma_2 -
+  \mu_2) + \epsilon_3 \\
+&amp; \vdots \\
+\gamma_p &amp; = \mu_p + \beta_{p 1} (\gamma_1 -
+  \mu_1)  \ldots + \beta_{p-1 \,  p-1} (\gamma_{p-1} -
+  \mu_{p-1})+  \epsilon_p
+\end{align*}\]</span></p></li>
+</ul>
+</div><div class="column" style="width:30%;">
+<p><img data-src="img/tree_v1.png"></p>
+</div>
+</div>
+</section>
+<section id="compositional-regression" class="slide level2">
+<h2>Compositional Regression</h2>
+<p>Approximate model <span class="math display">\[\boldsymbol{\gamma}\sim \textsf{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma}_{\boldsymbol{\gamma}})\]</span></p>
+<ul>
+<li class="fragment"><p>Wermouth (1980) compositional regression <span class="math display">\[ \mathbf{G}= \mathbf{1}_{T} \boldsymbol{\mu}^T + (\mathbf{G}- \mathbf{1}_T \boldsymbol{\mu}^T) \mathbf{B}+ \boldsymbol{\epsilon}
+\]</span></p></li>
+<li class="fragment"><p><span class="math inline">\(\mathbf{G}\)</span> is <span class="math inline">\(T \times p\)</span> matrix where row <span class="math inline">\(t\)</span> is <span class="math inline">\(\boldsymbol{\gamma}_t\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(\boldsymbol{\mu}\)</span> is the <span class="math inline">\(p\)</span> dimensional vector of <span class="math inline">\(\textsf{E}[\boldsymbol{\gamma}]\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(\boldsymbol{\Sigma}_{\boldsymbol{\gamma}} = \mathbf{U}^T \mathbf{U}\)</span> where <span class="math inline">\(\mathbf{U}\)</span> is upper triangular Cholesky decomposition of covariance matrix of <span class="math inline">\(\boldsymbol{\gamma}\)</span> (<span class="math inline">\(p \times p\)</span>)</p></li>
+<li class="fragment"><p><span class="math inline">\(\mathbf{B}^T = \mathbf{I}_p - diag(\mathbf{U})^{-1} \mathbf{U}^{-T}\)</span> (lower triangle)</p></li>
+<li class="fragment"><p><span class="math inline">\(\mathbf{B}\)</span> is a <span class="math inline">\(p \times p\)</span> upper triangular matrix with zeros on the diagonal and regression coefficients for <span class="math inline">\(jth\)</span> regression in row <span class="math inline">\(j\)</span></p></li>
+</ul>
+</section>
+<section id="estimators-of-mathbfb-and-boldsymbolmu" class="slide level2">
+<h2>Estimators of <span class="math inline">\(\mathbf{B}\)</span> and <span class="math inline">\(\boldsymbol{\mu}\)</span></h2>
+<ul>
+<li class="fragment"><p>OLS is BLUE and consistent, but <span class="math inline">\(\mathbf{G}\)</span> may not be full rank</p></li>
+<li class="fragment"><p>apply Bayesian Shrinkage with “priors” on <span class="math inline">\(\boldsymbol{\mu}\)</span> (non-informative or Normal) and <span class="math inline">\(\Sigma\)</span> (inverse-Wishart)</p></li>
+<li class="fragment"><p>pseudo-posterior mean <span class="math inline">\(\boldsymbol{\mu}\)</span> is the current estimate of the marginal inclusion probabilities <span class="math inline">\(\bar{\boldsymbol{\gamma}} = \hat{\boldsymbol{\mu}}\)</span></p></li>
+<li class="fragment"><p>use pseudo-posterior mean for <span class="math inline">\(\boldsymbol{\Sigma}\)</span></p></li>
+<li class="fragment"><p>requires one Cholesky decomposition provides all coefficients for the <span class="math inline">\(p\)</span> predictions for proposing <span class="math inline">\(\boldsymbol{\gamma}^*\)</span></p></li>
+<li class="fragment"><p>constrain predicted values <span class="math inline">\(\hat{\rho}_{j \mid &lt;j} \in (\delta, 1-\delta)\)</span></p></li>
+<li class="fragment"><p>generate <span class="math inline">\(\boldsymbol{\gamma}^*_j \mid \boldsymbol{\gamma}^*_{&lt; j} \sim \textsf{Ber}(\hat{\rho}_{j \mid &lt;j})\)</span></p></li>
+<li class="fragment"><p>use as proposal for Adaptive Independent Metropolis-Hastings or Importance Sampling (Accept all)</p></li>
+</ul>
+</section>
+<section id="horvitz-thompson" class="slide level2">
+<h2>Horvitz-Thompson</h2>
+<ul>
+<li class="fragment"><p>use only the <span class="math inline">\(n\)</span> unique models</p></li>
+<li class="fragment"><p>inclusion probability that <span class="math inline">\(\boldsymbol{\gamma}_i \in S\)</span> is included under IS (PPSWR) <span class="math display">\[\pi_i = 1 - (1 - q(\boldsymbol{\gamma}_i))^T\]</span></p></li>
+<li class="fragment"><p>HT estimate of normalizing constant <span class="math display">\[\hat{C} = \frac{1}{n} \sum_{i \in n} \frac{p(\mathbf{Y}\mid {{\cal M}}_i)p({{\cal M}}_i)} {\pi_i}\]</span></p></li>
+<li class="fragment"><p>Ratio HT estimate of posterior probabilities <span class="math display">\[p({\cal M}_\gamma\mid \mathbf{Y}) = \frac{\sum_{i \in n} I({{\cal M}}_i = {\cal M}_\gamma) p(\mathbf{Y}\mid {{\cal M}}_i)p({{\cal M}}_i)/\pi_{\boldsymbol{\gamma}}}
+{\sum_{i \in n} \frac{p(\mathbf{Y}\mid {{\cal M}}_i)p({{\cal M}}_i)} {\pi_i}} =
+\frac { p(\mathbf{Y}\mid {\cal M}_\gamma)p({{\cal M}}_i)/\pi_{\boldsymbol{\gamma}}}
+{\sum_{i \in n} \frac{p(\mathbf{Y}\mid {{\cal M}}_i)p({{\cal M}}_i)} {\pi_i}}\]</span></p></li>
+<li class="fragment"><p>Estimate of Marginal Inclusion Probabilities</p></li>
+</ul>
+<p><span class="math display">\[p(\gamma_j = 1 \mid \mathbf{Y}) = \frac{\sum_{i \in n} p(\mathbf{Y}\mid {{\cal M}}_i)p({\cal M}_\gamma)/\pi_{\boldsymbol{\gamma}}}
+{\sum_{i \in n} \frac{p(\mathbf{Y}\mid {{\cal M}}_i)p({{\cal M}}_i)} {\pi_i}}$
+\]</span></p>
+</section>
+<section id="simulation" class="slide level2">
+<h2>Simulation</h2>
+<ul>
+<li class="fragment"><p><code>tecator</code> data with a sample of <span class="math inline">\(p = 20\)</span> variables</p></li>
+<li class="fragment"><p>compare</p>
+<ul>
+<li class="fragment">enumeration</li>
+<li class="fragment">MCMC with add, delete, and swap moves</li>
+<li class="fragment">Adaptive MCMC</li>
+<li class="fragment">Importance Sampling with HT</li>
+</ul></li>
+</ul>
+</section>
+<section id="mse-comparision" class="slide level2 center">
+<h2>MSE Comparision</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="Keynote_Florida_files/figure-revealjs/unnamed-chunk-2-1.png" width="960"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="Keynote_Florida_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="basus-estimator-of-total" class="slide level2">
+<h2>Basu’s Estimator of Total</h2>
+<p>Basu (197), Meeden and Ghosh (1983) : <span class="math display">\[C = \sum_{i \in S} p(\mathbf{Y}\mid {{\cal M}}_i) p({{\cal M}}_i) + \frac{1}{n} \sum_{i \in S} \frac{p(\mathbf{Y}\mid {{\cal M}}_i)p({{\cal M}}_i)}{\pi_i} \times (1 - \sum_{i \notin S} \pi_i)\]</span></p>
+<ul>
+<li class="fragment"><p>Model-based: Let <span class="math inline">\(m_i = p(\mathbf{Y}\mid {{\cal M}}_i) p({{\cal M}}_i)\)</span> <span class="math display">\[\begin{align}
+m_i  \mid \pi_i &amp;\mathrel{\mathop{\sim}\limits^{\rm ind}}N(\pi_i \beta, \sigma^2 \pi_i^2) \\
+p(\beta, \sigma^2) &amp; \propto 1/\sigma^2
+\end{align}\]</span></p></li>
+<li class="fragment"><p>posterior mean of <span class="math inline">\(\beta\)</span> is <span class="math inline">\(\frac{1}{n} \sum_{i \in S} \frac{m_i}{\pi_i}\)</span> (HT)</p></li>
+<li class="fragment"><p>using posterior predictive <span class="math display">\[\begin{align*} \hat{C} &amp; = \sum_i m_i + \sum_{i \notin S} \hat{\beta} \pi_i
+= \sum_i m_i +  \frac{1}{n} \sum_{i \in S} \frac{m_i}{\pi_i}\sum_{i \in S} (1 - \pi_i)
+\end{align*}\]</span></p></li>
+<li class="fragment"><p>accounts for probability on models not yet observed!</p></li>
+</ul>
+</section>
+<section id="final-posterior-estimates" class="slide level2">
+<h2>Final Posterior Estimates</h2>
+<ul>
+<li class="fragment"><p>estimate of posterior probability <span class="math inline">\({\cal M}_\gamma\)</span> <span class="math display">\[
+\frac{p(\mathbf{Y}\mid {\cal M}_\gamma) p({\cal M}_\gamma)}{\sum_{i in S} p(\mathbf{Y}\mid {{\cal M}}_i) p({{\cal M}}_i)} +  \frac{1}{n} \sum_{i \in S} \frac{p(\mathbf{Y}\mid {{\cal M}}_i) p(\boldsymbol{{\cal M}}_i)}{\pi_i}\sum_{i \in S} (1 - \pi_i)
+\]</span></p></li>
+<li class="fragment"><p>Uses renormalized marginal likelihoods of sampled models</p></li>
+<li class="fragment"><p>Computing marginal inclusion probabilities</p></li>
+<li class="fragment"><p>What about <span class="math inline">\(\textsf{E}[\boldsymbol{\beta}\mid \mathbf{Y}]\)</span>, <span class="math inline">\(\textsf{E}[\mathbf{X}\boldsymbol{\beta}\mid \mathbf{Y}]\)</span>, <span class="math inline">\(\textsf{E}[\mathbf{Y}^* \mid \mathbf{Y}]\)</span> or <span class="math inline">\(p(\Delta \mid \mathbf{Y})\)</span>?</p></li>
+</ul>
+</section>
+<section id="continued-adaptation" class="slide level2">
+<h2>Continued Adaptation ?</h2>
+<ul>
+<li class="fragment">can update Cholesky with rank 1 updates with new models</li>
+<li class="fragment">how to combine IS with MH samples (weighting) ?</li>
+<li class="fragment">HT/Hajek - computational complexity involved if we need to compute inclusion probability for all models based on updates (previous models and future models)</li>
+<li class="fragment">Basu (1971) suggests approach for PPSWOR (adaptation?)</li>
+</ul>
+</section>
+<section id="refinements" class="slide level2">
+<h2>Refinements</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment">Need to avoid MCMC for pseudo Bayesian posteriors for
+<ul>
+<li class="fragment">learning proposal distribution in sample design for models</li>
+<li class="fragment">estimation of posterior model probabilities in model-based approaches (ie sampling from predictive distribution)</li>
+<li class="fragment">estimation of general quantities under BMA?</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="img/turtles_all_the_way_down.jpeg"></p>
+</div>
+</div>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment"><p>Adaptive Independent Metropolis proposal for models (use in more complex IS)</p></li>
+<li class="fragment"><p>Use observed values of unique marginal likelihoods of models for estimating posterior distribution</p></li>
+<li class="fragment"><p>Bayes estimates of MC output</p></li>
+<li class="fragment"><p>Basu’s Elephants seem to be well, holding up the Bayesian World</p></li>
+<li class="fragment"><p>and the Circus Statistician is still employed!</p></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="img/The_hindoo_earth.png"></p>
+</div>
+</div>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<p>Meeden and Ghosh (1983) https://www.jstor.org/stable/2240483</p>
+
+<img src="../../img/Dukelogo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
 
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
@@ -437,6 +769,7 @@
   <script src="Keynote_Florida_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="Keynote_Florida_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="Keynote_Florida_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Keynote_Florida_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="Keynote_Florida_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -451,18 +784,19 @@
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': true,
-'previewLinksAuto': false,
-'smaller': false,
+'controlsAuto': false,
+'previewLinksAuto': true,
+'smaller': true,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'smaller': false,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true,"boardmarkerWidth":1,"chalkWidth":2,"chalkEffect":0},
+'smaller': true,
  
         // Display controls in the bottom right corner
-        controls: false,
+        controls: true,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -479,7 +813,7 @@
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -612,7 +946,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -629,7 +963,7 @@
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,
