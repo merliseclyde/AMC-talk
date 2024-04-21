@@ -70,7 +70,6 @@ pp.HH = HH.wts(tecator.IS)
 ```
 
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
 ```{r}
 
@@ -154,11 +153,12 @@ n.models = 2^15
 set.seed(42)
 
 
-tecator.det = bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100,
-                     method = "deterministic", thin = 100,
-                     burnin.iterations = b.it,
+system.time(tecator.det <- bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", 
+                                  alpha = 100,
+                      method = "deterministic", thin = 100,
+                      burnin.iterations = b.it,
                       MCMC.iterations = mc.it,
-                      delta = 0.01, n.models = 2^p)
+                      delta = 0.01, n.models = 2^p))
 
 
 
@@ -172,23 +172,31 @@ load("tecator-det.Rdata")
 ```
 
 ```{r}
-system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
-                     method = "AMCMC", 
+NSIM = 25
+
+time = matrix(NA, nrow = NSIM, ncol=3)
+for (t in 1:NSIM) {
+  time[t,2] = system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", 
+                     alpha = 100, method = "AMCMC", 
                      burnin.iterations = b.it, thin = 100,
                      MCMC.iterations = mc.it, lambda = 102,
-                     delta = 0.01, n.models = n.models, importance.sampling = FALSE))
-system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", 
+                     delta = 0.01, n.models = n.models, importance.sampling = FALSE))[3]
+  time[t,3] = system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", 
                       alpha = 100, method = "MCMC", 
                      burnin.iterations = b.it, thin = 100,
                      MCMC.iterations = mc.it,
-                     delta = 0.01, n.models = n.models))
-system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
-                     method = "AMCMC", 
+                     delta = 0.01, n.models = n.models))[3]
+  time[t,1] = system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", 
+                     alpha = 100, method = "AMCMC", 
                      burnin.iterations = b.it, thin=100,
                      MCMC.iterations = mc.it,  lambda = 102, # renormalize = TRUE,
-                     delta = 0.01, n.models = n.models, importance.sampling = TRUE))
+                     delta = 0.01, n.models = n.models, importance.sampling = TRUE))[3]
 
+print(time[t,])
+}
 
+colnames(time) <- c("HT", "AMCMC", "MCMC")
+save(list=c("time"), file="tecator-time.dat")
 ```
 
 

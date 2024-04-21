@@ -16,7 +16,7 @@ format:
     fragments: true
     preview-links: auto
     smaller: true
-    logo: ../../img/Dukelogo.jpg
+    logo: img/Dukelogo.jpg
     chalkboard: 
       boardmarker-width: 1
       chalk-width: 2
@@ -31,6 +31,8 @@ editor:
 execute: 
   echo: false
 number-sections: false
+pdf-separate-fragments: false
+preview-links: true
 ---
 
 
@@ -245,12 +247,12 @@ The Former Circus Statistician asks: "So how do you estimate the probabilities o
 \end{align*}
 
 - $T$ = # MCMC samples
-- $S$ is the collection of sampled models
+- $S$ is the collection of unique sampled models
 - $n_{\g}$ is the frequency of model $\Mg$ in $S$
 
 . . . 
 
-- asymptotically unbiased
+- asymptotically unbiased as $T \to \infty$
 
 
 
@@ -274,7 +276,7 @@ What! You just the Monte Carlo frequencies! exclaimed the Former Circus Statisti
 - what happened to the (observed) marginal likelihoods $\times$ prior probabilities?
 
 - since you are sampling from a finite population, can you use survey sampling estimates of
-$$\sum_{\g \in \Gamma } p(\Y \mid \Mg) p(\Mg)$$
+$$C = \sum_{\g \in \Gamma } p(\Y \mid \Mg) p(\Mg)$$
 with the observed $p(\Y \mid \Mg) p(\Mg)$?
 
 - Agency Statistician:  We tried using 
@@ -282,7 +284,7 @@ $$
 \widehat{p(\Mg \mid\ Y)} = \frac {p(\Y \mid \Mg) p(\Mg)} {\sum_{\g \in S} p(\Y \mid \Mg)p(\Mg)}
 $$
 
-- it's biased in finite samples, but Fisher Consistent
+- it's Fisher Consistent, but biased in finite samples
 
 - that's why we need you!
 :::
@@ -317,7 +319,7 @@ But this is the "infamous" harmonic mean estimator, said the Agency Statistician
 
 The Former Circus Statistician (hoping to keep this gig): 
 
-- Wait! - I know that the Horvitz-Thompson (HT) estimator which uses only the unique sampled values and not the frequencies
+- Wait! - I know that the Horvitz-Thompson (HT) estimator uses only the unique sampled values and not the frequencies
 
 - HT dominates the Hansen-Hurwitz in terms of variance!
 
@@ -331,7 +333,7 @@ The Former Circus Statistician (hoping to keep this gig):
 
 Former Circus Statistician:   So tell me more about $q$ in MCMC
 
-- ratio $\frac{p(\Y \mid \Mg^*) p(\Mg^*)}{q(\Mg^*)}$ looks like importance sampling
+- ratio $\frac{p(\Y \mid \Mg^*) p(\Mg^*)}{q(\Mg^* \mid \Mg)}$ looks like importance sampling
 
 - what are choices for $q(\Mg^* \mid \Mg)$?
 
@@ -349,11 +351,13 @@ Griffin et al (2021):
   -  Product of **Independent** Bernoullis
  - Use adaptive Independent Metropolis Hastings to learn $\pi_i$ from past samples plus Rao-Blackwellization
  
- - optimal for target of posterior where $\gamma_j$ are independent
+ - optimal for target  where $\gamma_j$ are independent _a posteriori_
  
  - still uses Metropolis-Hastings Ratio to accept
  
  - And they use Monte Carlo frequencies!
+ 
+ - but it does not work well for sampling with replacement and importance sampling in general
  
 
 ## Factor Target
@@ -433,7 +437,7 @@ $$
 - pseudo-posterior mean $\mub$ is the current estimate of the marginal inclusion probabilities $\bar{\g} = \hat{\mub}$
 - use pseudo-posterior mean for $\Sigmab$
 
-- requires one Cholesky decomposition provides all
+- one Cholesky decomposition provides all
     coefficients for the $p$ predictions for proposing $\g^*$
     
 - constrain predicted values $\hat{\rho}_{j \mid <j} \in (\delta, 1-\delta)$ 
@@ -468,14 +472,39 @@ $$p(\gamma_j = 1 \mid \Y) = \frac{\sum_{i \in n} p(\Y \mid \M_i)p(\Mg)/\pi_{\g}}
 $$
 
 ## Simulation
+::: {.nonincremental}
+:::: {.columns}
 
-- `tecator` data with a sample of $p = 20$ variables
+::: {.column width="50%"}
+- `tecator` data (Griffin et al (2021))
+
+- a sample of $p = 20$ variables
 
 - compare 
   - enumeration
   - MCMC with add, delete, and swap moves
   - Adaptive MCMC
   - Importance Sampling with HT
+- same settings `burnin.it`, `MCMC.it`, `thin`  
+:::
+
+::: {.column width="50%"}
+
+
+
+
+
+```{r}
+load("sim_code/tecator-time.dat")
+boxplot(time, main="CPU time", ylab = "Time")
+
+```
+:::
+
+
+::::
+
+:::
 
 ## MSE Comparision {.center}
 
@@ -554,11 +583,11 @@ $$
     - estimation of posterior model probabilities in model-based approaches (ie sampling from predictive distribution)
     - estimation of general quantities under BMA?
     
-
+- avoid infinite regret
 :::
 
 ::: {.column width="40%"}
-![](img/turtles_all_the_way_down.jpeg)
+![](img/turtles_all_the_way_down.jpg)
 
 :::
 ::::
@@ -589,9 +618,14 @@ $$
 
 
 
-
 :::
 ::::
+
+##  Thank You!  {style="text-align: .center}
+
+
+
+Code in development version of `BAS` on [https://github.com/merliseclyde/BAS](https://github.com/merliseclyde/BAS)
 
 
 ## References
