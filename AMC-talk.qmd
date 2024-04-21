@@ -16,12 +16,8 @@ format:
     fragments: true
     preview-links: auto
     smaller: true
-    logo: img/Dukelogo.jpg
-    chalkboard: 
-      boardmarker-width: 1
-      chalk-width: 2
-      chalk-effect: 0
-    embed-resources: false
+    logo: Dukelogo.jpg
+    embed-resources: true
 html-math-method:
   method: mathjax
   url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"    
@@ -249,7 +245,7 @@ The Former Circus Statistician asks: "So how do you estimate the probabilities o
 - $T$ = # MCMC samples
 - $S$ is the collection of unique sampled models
 - $n_{\g}$ is the frequency of model $\Mg$ in $S$
-
+- $n = \sum_{\g \in S} n_{\g}$ total number of unique models
 . . . 
 
 - asymptotically unbiased as $T \to \infty$
@@ -299,7 +295,7 @@ Former Circus Statistician: Let's try the Hansen-Hurwitz estimator in PPS sampli
 - Goal is to estimate $C= \sum_i^N p(\Y \mid \M_i) p(\M_i)$ 
 - Let $\rho_i$ be the probability of selecting $\M_i$
 - Hansen-Hurwitz or importance sampling estimate   is
-$$\hat{C} = \frac{1}{n}\sum_i^n \frac{ p(\Y \mid \M_i) p(\M_i)}{\rho_i}
+$$\hat{C} = \frac{1}{n}\sum_i^n \frac{ n_i p(\Y \mid \M_i) p(\M_i)}{\rho_i}
 $$
 - If we have "perfect" samples from the posterior then 
 $$\rho_i = \frac{p(\Y \mid \M_i)p(\M_i)}{C}$$ and recover $C$!
@@ -534,7 +530,7 @@ boxplot(10*sqrt(mse.pp), main="Posterior Model Probabilities", ylab = "10 x RMSE
 
 ## Basu's Estimator of Total
 
-Basu (197),  Meeden and Ghosh (1983) :
+Basu (1971),  Meeden and Ghosh (1983) :
 $$C = \sum_{i \in S} p(\Y \mid \M_i) p(\M_i) + \frac{1}{n} \sum_{i \in S} \frac{p(\Y \mid \M_i)p(\M_i)}{\pi_i} \times (1 - \sum_{i \notin S} \pi_i)$$
 
 - Model-based: Let $m_i = p(\Y \mid \M_i) p(\M_i)$
@@ -556,7 +552,12 @@ p(\beta, \sigma^2) & \propto 1/\sigma^2
 
 - estimate of posterior probability $\Mg$
 $$
-\frac{p(\Y \mid \Mg) p(\Mg)}{\sum_{i in S} p(\Y \mid \M_i) p(\M_i)} +  \frac{1}{n} \sum_{i \in S} \frac{p(\Y \mid \M_i) p(\Mi)}{\pi_i}\sum_{i \in S} (1 - \pi_i)
+\frac{p(\Y \mid \Mg) p(\Mg)}{\sum_{i \in S} p(\Y \mid \M_i) p(\M_i) +  \frac{1}{n} \sum_{i \in S} \frac{p(\Y \mid \M_i) p(\Mi)}{\pi_i}\sum_{i \in S} (1 - \pi_i)}
+$$
+
+- estimate of all models in $\G - S$
+$$
+\frac{1}{\sum_{i \in S} p(\Y \mid \M_i) p(\M_i) +  \frac{1}{n} \sum_{i \in S} \frac{p(\Y \mid \M_i) p(\Mi)}{\pi_i}\sum_{i \in S} (1 - \pi_i)}
 $$
 - Uses renormalized marginal likelihoods of sampled models 
 
@@ -621,12 +622,23 @@ $$
 :::
 ::::
 
-##  Thank You!  {style="text-align: .center}
+##  Thank You! {.center}
 
 
+:::: {.columns}
+::: {.column width="50%"}
 
 Code in development version of `BAS` on [https://github.com/merliseclyde/BAS](https://github.com/merliseclyde/BAS)
 
+Talk available at [https://merliseclyde.github.io/AMC-talk/](https://merliseclyde.github.io/AMC-talk/])
+
+:::
+
+::: {.column width="50%"}
+
+![](img/adobe-express-qr-code.png){width="50%"}
+:::
+::::
 
 ## References
 
