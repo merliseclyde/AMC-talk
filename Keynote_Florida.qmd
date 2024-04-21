@@ -2,8 +2,9 @@
 title: "In Search of Basu's Elephants"
 author: "Merlise Clyde"
 subtitle: |
- | Conference Honoring Basu and Bahadur
  | Theory and Foundations of Statistics in the Era of Big Data
+ | Conference Honoring Bahadur and Basu
+ 
 institute: "Duke University"
 date: "4/21/2024"
 format: 
@@ -54,7 +55,7 @@ Circus Owner plans to ship his 50 elephants
 
 - needs an approximate total weight of the 50 elephants
 - Sambo is a typical elephant of average weight
-- decides to take 50 $\times$ Sambo's weight as an estimate of the total weight
+- decides to take 50 $\times$ Sambo's current weight as an estimate of the total weight of his herd
 :::
 
 ::: {.column width="40%"}
@@ -70,9 +71,10 @@ Circus Owner plans to ship his 50 elephants
 ::: {.column width="60%"}
 Circus Statistician is shocked!
 
-- we need an approximate sampling design to create an unbiased estimator
-- sample Sambo with probability $99/100$
-- the rest of the elephants with probability $1/4900$
+- we need a sampling design to create an unbiased estimator!
+- they compromised and came up with the following plan:
+  - sample Sambo with probability $99/100$
+  - the rest of the elephants with probability $1/4900$
 
 :::
 
@@ -81,250 +83,522 @@ Circus Statistician is shocked!
 :::
 
 ::::
-## Unbiased Estimation
+## Unbiased Estimation & Horvitz-Thompson
 
 :::: {.columns}
 
-::: {.column width="60%"}
+::: {.column width="70%"}
 
-Everyone was happy when Sambo was selected
+Everyone was happy when Sambo was selected!
+
 - Circus Owner proposes using $50 \times$ Sambo's current weight
-- Circus Statistician insists on using the Horvitz-Thompson Estimator
-   - unique hyperadmissible estimator in the class of all generalized polynomial unbiased estimators!
+- Circus Statistician: we should use the Horvitz-Thompson Estimator (HT)
+   - unique hyper-admissible estimator in the class of all generalized polynomial unbiased estimators! 
 - HT estimate is Sambo's weight $\div$ probability Sambo was selected  -or- W $\times 100/99$
-- BUt what if the largest elephant Jumbo had been selected?
-- HT would lead to Jumbo's weight $\times 4900/1$!
-- and thus the Circus statistician need a new job!
+- But what if the largest elephant Jumbo had been selected? asked the Circus Owner
+- Well, said the sheepish statistician, HT would lead to Jumbo's weight $W \times 4900/1$!
+- and thus the Circus statistician lost their job (and became an instructor of statistics)!
 :::
 
-::: {.column width="40%"}
+::: {.column width="30%"}
 ![](img/basu-elephant.png){width="70%"}
 :::
 
 ::::
-## Variable Selection
-
-Importance sampling - approx to posterior in Orthogonal design.  (conditionally indpendent; RB possible )
-
-Ergodic Averages versus using acumulated knowledge of sampled marginals.  (renormalized vs MC freq)
-
-Harmonic Mean equivalent to Hansen Huriwtz estimator in PPS sampling (samping basaed on posterior of models)  
-
-Let $\rho_i$ be the probability of selecting $M_i$
-Estimate of Normalizing constant 
-$T = \sum_i^N m(\gamma_i)$ 
-
-Models samples from $\rho_i$ using the Hansen-Huriwtz estimator
-
-$$
-\hat{T} = \frac{1}{n}\sum_i^n \frac{m(\gamma_i)}{\rho_i}
-$$
-If we have "perfect" samples from the posterior then $$\rho_i = m(\gamma_i)/T$$, but since $T$ is unknown, we can apply the ratio estimator
-$$
-\hat{T} = \frac{\frac1 n \sum_i^n \frac{m(\gamma_i)}{\rho_i}}{ \frac1 n \sum_i^n \frac{1}{\rho_i}} =  \left[\frac 1 n  \sum_i \frac{1}{m(\gamma_i)} \right]^{-1}
-$$
-which is the harmonic mean estimator.  While unbiased is highly unstable
-
-Express as a function of the Unique values
-$$
-\hat{T} = \frac{ \sum_i^N n_i\frac{m(\gamma_i)}{\rho_i}}{ \frac1 n \sum_i^n \frac{n_i}{\rho_i}} 
-$$
 
 
-Can improve upon that with the use of Rao-Blackwellization but computational complexity precludes use!
+## Several years later...
 
+:::: {.columns}
+::: {.column width=50%}
+![](img/model_agency.png)
+:::
+::: {.column width=50%}
 
-
-Sampoing wor approximate posterior
-
-Importance Sampling vs Horivitz Thomposn estimator
-
-Horivitz-Thompson:  sampling with replacement but us just the unique  labels
-
-
-
-
-Fisher consistency. Rao-Blackewell. (DA -> RB ?)
-
-completeness?
-
-# several years later: 
 Statistical Modelling Agency has ad out for help sampling models 
 
-Circus statistician applies (admits they know are a bit intimidated about measuring human models, 
+- Circus statistician applies 
 
-![ModelMatrix](img/model_agency.png)
+- Agency:   we want to implement Bayesian Model Averaging and need your help in sampling models
+and estimation
 
+- Former Circus Statistician:  I know all about sampling!  Tell me more!
 
-neglicting to mention their failure with elephants ) 
+- and being an instructor of statistics does not pay enough
 
-Owner: oh silly  these are statistical models 
-(oh says the statistian still eager for a job, not realizing that this was way more difficult)
+:::
+::::
 
-# But reads up and discovers MCMC & BMA. 
+## Canonical Regression Model
+- Observe response vector $\Y$ with predictor variables $X_1 \dots
+X_p$.  
 
-Shicked and Appalled they discover that the standard approaches just use the Monte Carlo frequencies!  (meme - simpsons)
-
-I've got this meme 
-
-![I got this](https://tenor.com/view/trustme-yes-festivus-gif-18095876)
-
-
-Using their knowledge of HT rediscovers the infamous harmonic mean estimator
-
-
-in process discovered Nott & Kohn ACMC 
-# adapt to Global Sampler
-
-can't have the infinite regret of designing a "MCMC" algorithm to learn the sampling probabilities of how to 
-avoid Hall of Mirrors (ie Bayes analysis of Bayes model based approach )
-
-![Turtles](img/turtles_all_the_way_down.jpeg)
-
-## advantages
-
-fewer runs
-escape locale modes ? vs Gibbs
+- Model for data under a specific model $\Mg$:
+\begin{equation*}
+\Y \mid \alpha, \bg, \phi, \Mg \sim \N(\one_n\alpha + \Xg \bg, \I_n/\phi)
+\label{eq:linear.model}
+\end{equation*}
 
 
-## Successive Sampling
+- Models $\Mg$ encoded by $\g = (\gamma_1, \ldots \gamma_p)^T$ binary vector with
+  $\gamma_j = 1$ indicating that $X_j$ is included in model $\Mg$
+  where
+  \begin{align*}
+  \gamma_j = 0 & \Leftrightarrow \beta_j = 0 \\
+  \gamma_j = 1 &  \Leftrightarrow \beta_j \neq 0 
+  \end{align*}
 
-https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-43/issue-2/Asymptotic-Theory-for-Successive-Sampling-with-Varying-Probabilities-Without-Replacement/10.1214/aoms/1177692620.full
+- $\Xg$: the $n \times \pg$  design matrix for model $\Mg$
+  
+-  $\bg$:  the $\pg$ vector of non-zero regression coefficients under $\Mg$
 
-see adaptive normalized improvement Polson ref https://arxiv.org/pdf/2204.14121.pdf
-improves over HT/Hajek.
-
-## Basu's Elephants
-
-bias as a bugaboo with IS/HT
-
-Dumbo meme -> wrong model
-
-review Ghosh recap; Rao-Blackewell
-
-Bannerjee modern take https://arxiv.org/pdf/2306.10635.pdf  Justifies HT as Bayes 
-Zio - Legacy of Basu https://link.springer.com/article/10.1007/s13171-023-00327-5
-
-Little, R. (2022). Bayes, buttressed by design-based ideas, is the best overarching paradigm
-for sample survey inference. Survey Methodology 48, 257–281. https://www150.statcan.gc.ca/n1/en/pub/12-001-x/2022002/article/00001-eng.pdf?st=WfLlbHn8
-Talk https://lshtm.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=e59d434e-f035-4f0e-b5f4-af5e00ca9772
+-  intercept $\alpha$, precision $\phi$ common to all models
 
 
-Sanchez & Sanchez 2005 https://dl-acm-org.proxy.lib.duke.edu/doi/pdf/10.1145/1113316.1113320
 
-## Model Based
 
-log linear
 
-Resolution V 2P -k designs
+  
 
-what do we get?
+##  Bayesian Model Averaging  (BMA)
 
-Sanchez & Sanchez 2005 https://dl-acm-org.proxy.lib.duke.edu/doi/pdf/10.1145/1113316.1113320
+- prior distributions on all unknowns $(\bg, \g, \alpha, \phi)$ and turn the Bayesian crank to get posterior distributions!
 
+ - key component is posterior distribution over models
+$$
+p(\Mg \mid\ Y) = \frac {p(\Y \mid \Mg) p(\Mg)} {\sum_{\g \in \Gamma} p(\Y \mid \Mg)p(\Mg)}
+$$
+
+
+- for **nice** priors, we can integrate out the parameters $\tg = (\bg, \alpha, \phi)$ to obtain the marginal likelihood of $\Mg$ which is proportional to
+$$
+p(\Y \mid \Mg) = \int p(\Y \mid \tg, \Mg)p(\tg  \mid \Mg) d\tg
+$$ 
+
+- posterior distribution of quantities $\Delta$ of interest under BMA
+$$
+\sum_{\g \in \Gamma} p(\Mg \mid \Y) p(\Delta \mid \Y, \Mg) 
+$$
+- estimations $\E[\Y]$, predictive distribution of $\Y^*$, $\gamma_j$ (marginal inclusion probabilities)
+
+
+
+
+## Implementation
+
+
+The Former Circus Statistician asked - "What if you can't enumerate all of the models in $\gamma$? 
+
+- With $88$ predictor variables there  are $2^{88} > 3 \times 10^{26}$
+models! 
+
+- more than the number of stars ($10^{24}$) in the universe!
+
+. . .
+
+![](img/dont-panic.png){width=70%}
+
+
+
+## Sampling
+
+Well, then we just use a sample, said the agency statistician 
+
+- simple random sampling with or without replacement doesn't work very well (inefficient)
+
+- Box used importance sampling in the 80's, but that didn't seem to scale
+
+- non-random samples using Branch & Bound, but those are biased (also does not scale)
+
+- but then Bayesians discovered MCMC so Markov Chain Monte Carlo is now pretty standard for implementation of BMA
+
+## MCMC 
+
+  - design a Markov Chain to transition through $\Gamma$ so that ultimately models are sampled proportional to their posterior probabilities 
+  $$
+  p(\Mg \mid \Y ) \propto p(\Y \mid \Mg) p(\Mg)
+  $$
+ 
+ - propose a new model from $q(\g^* \mid \g)$ 
+ 
+ - accept moving to $\g^*$ with probability
+$$
+\textsf{MH} = \max(1, \frac{p(\Mg* \mid \Y)p(\Mg^*)/q(\g^* \mid \g)}
+                   {p(\Mg \mid \Y)p(\Mg)/q(\g)})
+$$
+
+- otherwise stay at model $\Mg$
+
+- the normalizing constant is the same in the numerator and denominator so we just need
+$p(\Y \mid \Mg) p(\Mg)$!
+
+
+
+## Estimation in BMA
+
+The Former Circus Statistician asks: "So how do you estimate the probabilities of models?
+
+
+- we just use the Monte Carlo frequencies of models or ergodic averages
+\begin{align*} 
+\widehat{p(\Mg \mid \Y)}  & = \frac{\sum_{t = 1}^T I(\M_t = \Mg)} {T} \\
+ & = \frac{\sum_{\g \in S} n_{\g} I(\Mg \in S)} {\sum n_{\g}} \\
+\end{align*}
+
+- $T$ = # MCMC samples
+- $S$ is the collection of sampled models
+- $n_{\g}$ is the frequency of model $\Mg$ in $S$
+
+. . . 
+
+- asymptotically unbiased
+
+
+
+## Shocked (II)
+
+:::: {.columns}
+
+::: {.column width="40%"}
+
+![](img/shocked-statistician.png){width="70%"}
+
+What! You just the Monte Carlo frequencies! exclaimed the Former Circus Statistician
+
+- I don't know much about Bayes, but that doesn't seem particularly Bayesian!
+
+:::
+
+::: {.column width="60%"}
+
+
+- what happened to the (observed) marginal likelihoods $\times$ prior probabilities?
+
+- since you are sampling from a finite population, can you use survey sampling estimates of
+$$\sum_{\g \in \Gamma } p(\Y \mid \Mg) p(\Mg)$$
+with the observed $p(\Y \mid \Mg) p(\Mg)$?
+
+- Agency Statistician:  We tried using 
+$$
+\widehat{p(\Mg \mid\ Y)} = \frac {p(\Y \mid \Mg) p(\Mg)} {\sum_{\g \in S} p(\Y \mid \Mg)p(\Mg)}
+$$
+
+- it's biased in finite samples, but Fisher Consistent
+
+- that's why we need you!
+:::
+
+::::
+
+
+## Inverse Probability Weighting
+
+Former Circus Statistician: Let's try the Hansen-Hurwitz estimator in PPS sampling 
+
+- Goal is to estimate $C= \sum_i^N p(\Y \mid \M_i) p(\M_i)$ 
+- Let $\rho_i$ be the probability of selecting $\M_i$
+- Hansen-Hurwitz or importance sampling estimate   is
+$$\hat{C} = \frac{1}{n}\sum_i^n \frac{ p(\Y \mid \M_i) p(\M_i)}{\rho_i}
+$$
+- If we have "perfect" samples from the posterior then 
+$$\rho_i = \frac{p(\Y \mid \M_i)p(\M_i)}{C}$$ and recover $C$!
+
+## Self-Normalized Importance Sampling
+
+Since $C$ is unknown, we can apply the ratio estimator
+$$
+\hat{C} = \frac{\frac1 n \sum_i^n \frac{p(\Y \mid \M_i) p(\M_i)}{\rho_i}}{ \frac1 n \sum_i^n \frac{1}{\rho_i}} =  \left[ \sum_i \frac{1}{p(\Y \mid \M_i) p(\M_i)} \right]^{-1}
+$$
+
+. . .
+
+But this is the "infamous" harmonic mean estimator, said the Agency Statistician!  While unbiased, it's is highly unstable!
+
+. . .
+
+The Former Circus Statistician (hoping to keep this gig): 
+
+- Wait! - I know that the Horvitz-Thompson (HT) estimator which uses only the unique sampled values and not the frequencies
+
+- HT dominates the Hansen-Hurwitz in terms of variance!
+
+- but we can't use MCMC...
+
+
+
+
+
+## Proposal Distribution
+
+Former Circus Statistician:   So tell me more about $q$ in MCMC
+
+- ratio $\frac{p(\Y \mid \Mg^*) p(\Mg^*)}{q(\Mg^*)}$ looks like importance sampling
+
+- what are choices for $q(\Mg^* \mid \Mg)$?
+
+- what about independent proposals $q(\Mg^*)$?
+
+
+
+## Adaptive Independent Metropolis 
+
+Griffin et al (2021):
+
+ - Independent Metropolis Hastings 
+   $$q(\g) = \prod \pi_i^{\gamma_i} (1 - \pi_i)^{1-\gamma_i}$$
+   
+  -  Product of **Independent** Bernoullis
+ - Use adaptive Independent Metropolis Hastings to learn $\pi_i$ from past samples plus Rao-Blackwellization
+ 
+ - optimal for target of posterior where $\gamma_j$ are independent
+ 
+ - still uses Metropolis-Hastings Ratio to accept
+ 
+ - And they use Monte Carlo frequencies!
+ 
+
+## Factor Target
+
+- The joint posterior distribution of $\g$ (dropping $\Y$) may be factored:
+$$p(\Mg \mid \Y) \equiv p(\g) = \prod_{j = 1}^p p(\gamma_j \mid \g_{<j})
+$$
+where $\g_{< j}\equiv \{\gamma_k\}$ for $k < j$ and $p(\gamma_1
+\mid \g_{<1}) \equiv p(\gamma_1)$.
+
+
+- As $\gamma_j$ are binary,  re-express  as
+\begin{equation*}
+p(\g) = \prod_{j=1}^p(\rho_{j \mid <j})^{\gamma_j}{(1-\rho_{j
+    \mid <j})}^{1-\gamma_j}
+\end{equation*}
+where $\rho_{j \mid <j} \equiv \Pr(\gamma_j = 1 \mid \g_{<j})$ and
+$\rho_{1 \mid < 1} = \rho_1$, the marginal probability. 
+
+
+- Product of **Dependent** Bernoullis
+
+## Global Adaptive MCMC Proposal
+
+:::: {.columns}
+
+::: {.column width="60%"}
+Factor proposal 
+$$q(\g) = \prod_{j = 1}^p q(\gamma_j \mid \g_{<j}) = \prod_j \Ber(\hat{\rho}_{j \mid <j})
+$$
+
+- Note: $\Pr(\gamma_j = 1 \mid \g_{<j}) = \E[\gamma_j = 1 \mid \g_{<j}]$ 
+
+- Fit a sequence of $p$ regressions $\gamma_j$ on 
+  $\gamma_{<j}$ 
+  \begin{align*}
+ \gamma_1 & = \mu_1 + \epsilon_1 \\
+\gamma_2  & = \mu_2 + \beta_{2 1} (\gamma_1 - \mu_1) + \epsilon_2 \\
+\gamma_3 & = \mu_3 + \beta_{3 1} (\gamma_1 -
+    \mu_1) + \beta_{3 2} (\gamma_2 -
+    \mu_2) + \epsilon_3 \\
+& \vdots \\
+\gamma_p & = \mu_p + \beta_{p 1} (\gamma_1 -
+    \mu_1)  \ldots + \beta_{p-1 \,  p-1} (\gamma_{p-1} -
+    \mu_{p-1})+  \epsilon_p 
+\end{align*}
+
+:::
+
+::: {.column width="30%"}
+
+![](img/tree_v1.png){width="70%}
+:::
+::::
+
+## Compositional Regression 
+
+Approximate model $$\g \sim \N(\mub, \Sigmab_{\g})$$
+
+- Wermouth (1980) compositional regression 
+$$ \G = \one_{T} \mub^T + (\G - \one_T \mub^T) \B + \eps
+$$
+
+- $\G$ is $T \times p$ matrix where row $t$ is $\g_t$
+- $\mub$ is the $p$ dimensional vector of $\E[\g]$
+- $\Sigmab_{\g} = \U^T \U$  where  $\U$ is upper triangular Cholesky decomposition of covariance matrix of $\g$ ($p \times p$)
+- $\B^T = \I_p -  diag(\U)^{-1} \U^{-T}$   (lower triangle)
+- $\B$ is  a $p \times p$ upper triangular matrix with zeros on
+    the diagonal and regression coefficients for $jth$ regression in row $j$
+
+## Estimators of $\B$ and $\mub$
+
+- OLS is BLUE and consistent, but $\G$ may not be full rank
+
+- apply Bayesian Shrinkage with "priors" on $\mub$ (non-informative or Normal) and $\Sigma$ (inverse-Wishart)
+
+- pseudo-posterior mean $\mub$ is the current estimate of the marginal inclusion probabilities $\bar{\g} = \hat{\mub}$
+- use pseudo-posterior mean for $\Sigmab$
+
+- requires one Cholesky decomposition provides all
+    coefficients for the $p$ predictions for proposing $\g^*$
+    
+- constrain predicted values $\hat{\rho}_{j \mid <j} \in (\delta, 1-\delta)$ 
+
+- generate $\g^*_j \mid \g^*_{< j} \sim \Ber(\hat{\rho}_{j \mid <j})$
+    
+- use as proposal for Adaptive Independent Metropolis-Hastings or Importance Sampling (Accept all)
+
+
+## Horvitz-Thompson
+
+
+
+
+
+- use only the $n$ unique  models 
+- inclusion probability that $\g_i \in S$ is included under IS (PPSWR)
+$$\pi_i = 1 - (1 - q(\g_i))^T$$
+- HT estimate of normalizing constant
+$$\hat{C} = \frac{1}{n} \sum_{i \in n} \frac{p(\Y \mid \M_i)p(\M_i)} {\pi_i}$$
+
+- Ratio HT estimate of posterior probabilities
+$$p(\Mg \mid \Y) = \frac{\sum_{i \in n} I(\M_i = \Mg) p(\Y \mid \M_i)p(\M_i)/\pi_{\g}}
+{\sum_{i \in n} \frac{p(\Y \mid \M_i)p(\M_i)} {\pi_i}} = 
+\frac { p(\Y \mid \Mg)p(\M_i)/\pi_{\g}}
+{\sum_{i \in n} \frac{p(\Y \mid \M_i)p(\M_i)} {\pi_i}}$$
+
+- Estimate of Marginal Inclusion Probabilities
+
+$$p(\gamma_j = 1 \mid \Y) = \frac{\sum_{i \in n} p(\Y \mid \M_i)p(\Mg)/\pi_{\g}}
+{\sum_{i \in n} \frac{p(\Y \mid \M_i)p(\M_i)} {\pi_i}}$
+$$
+
+## Simulation
+
+- `tecator` data with a sample of $p = 20$ variables
+
+- compare 
+  - enumeration
+  - MCMC with add, delete, and swap moves
+  - Adaptive MCMC
+  - Importance Sampling with HT
+
+## MSE Comparision {.center}
+
+:::: {.columns}
+
+::: {.column width="50%"}
 
 ```{r}
-require("mgcv")
-#| eval: FALSE
-des = FFdes(15)
-des.bin = (des + 1)/2
+#| echo: FALSE
+load("tecator-mse.dat")
+colnames(mse.pip) <- c("HT", "AMCMC", "MCMC")
+boxplot(10*sqrt(mse.pip), main="Marginal Inclusion Probabilities", ylab = "10 x RMSE")
 ```
+:::
+
+::: {.column width="50%"}
 
 ```{r}
-require("BAS")
+#| echo: FALSE
+colnames(mse.pp) <- c("HT", "AMCMC", "MCMC")
 
+boxplot(10*sqrt(mse.pp), main="Posterior Model Probabilities", ylab = "10 x RMSE")
 ```
+:::
 
-```{r}
-#| eval: FALSE
-data(UScrime, package="MASS")
-crime.bic <- bas.lm(log(y) ~ log(M) + So + log(Ed) +
-  log(Po1) + log(Po2) +
-  log(LF) + log(M.F) + log(Pop) + log(NW) +
-  log(U1) + log(U2) + log(GDP) + log(Ineq) +
-  log(Prob) + log(Time),
-  data = UScrime, n.models = 2^15, prior = "g-prior", alpha = nrow(UScrime),
-  modelprior = beta.binomial(1, 1),
-  method = "deterministic")
+::::
 
-model.space = which.matrix(crime.bic$which, crime.bic$n.vars)[,-1]
-```
+## Basu's Estimator of Total
 
+Basu (197),  Meeden and Ghosh (1983) :
+$$C = \sum_{i \in S} p(\Y \mid \M_i) p(\M_i) + \frac{1}{n} \sum_{i \in S} \frac{p(\Y \mid \M_i)p(\M_i)}{\pi_i} \times (1 - \sum_{i \notin S} \pi_i)$$
 
-```{r}
-#| eval: FALSE
-ms.index = apply(model.space, 1, function(x)  paste0(as.character(x), collapse=""))
-des.index = apply(des.bin, 1, function(x)  paste(as.character(x), collapse=""))
-subsample = ms.index %in% des.index
+- Model-based: Let $m_i = p(\Y \mid \M_i) p(\M_i)$
+\begin{align} 
+m_i  \mid \pi_i &\ind N(\pi_i \beta, \sigma^2 \pi_i^2) \\
+p(\beta, \sigma^2) & \propto 1/\sigma^2
+\end{align}
 
-```
+- posterior mean of $\beta$ is $\frac{1}{n} \sum_{i \in S} \frac{m_i}{\pi_i}$ (HT)
 
-```{r}
-#| eval: FALSE
-logm = crime.bic$logmarg[subsample]
-df = data.frame(des)
-df[] <- lapply( df, factor) 
-df$logm = crime.bic$logmarg[subsample]
-ff.fit = lm(logm ~ .^2, data=df)
+- using posterior predictive 
+\begin{align*} \hat{C} & = \sum_i m_i + \sum_{i \notin S} \hat{\beta} \pi_i 
+ = \sum_i m_i +  \frac{1}{n} \sum_{i \in S} \frac{m_i}{\pi_i}\sum_{i \in S} (1 - \pi_i) 
+\end{align*}
 
-```
+- accounts for probability on models not yet observed! 
 
+##  Final Posterior Estimates
 
-## example under model of independence
-log m = \mu + \sum(gamma)
-## What Next
+- estimate of posterior probability $\Mg$
+$$
+\frac{p(\Y \mid \Mg) p(\Mg)}{\sum_{i in S} p(\Y \mid \M_i) p(\M_i)} +  \frac{1}{n} \sum_{i \in S} \frac{p(\Y \mid \M_i) p(\Mi)}{\pi_i}\sum_{i \in S} (1 - \pi_i)
+$$
+- Uses renormalized marginal likelihoods of sampled models 
 
-sequential sampling (design choice)
+- Computing marginal inclusion probabilities 
 
-sampling + design
-
-estimates (HT  or other). https://resources.environment.yale.edu/content/documents/00001669/Horvitz-Thompson.pdf
-
-RB
+- What about $\E[\b \mid \Y]$, $\E[\X\b \mid \Y]$, $\E[\Y^* \mid \Y]$ or $p(\Delta \mid \Y)$?
 
 
-# several years later: 
-Statistical Modelling Agency has ad out for help sampling models 
+## Continued Adaptation ?
 
-Circus statistician applies (admits they know are a bit intimidated about measuring human models, 
-
-![ModelMatrix](model_agency.png)
-
-
-neglicting to mention their failure with elephants ) 
-
-Owner: oh silly  these are statistical models 
-(oh says the statistian still eager for a job, not realizing that this was way more difficult)
-
-# But reads up and discovers MCMC & BMA. 
-
-Shicked and Appalled they discover that the standard approaches just use the Monte Carlo frequencies!  (meme - simpsons)
-
-I've got this meme 
-
-![I got this](https://tenor.com/view/trustme-yes-festivus-gif-18095876)
+- can update Cholesky with rank 1 updates with new models
+- how to combine IS with MH samples (weighting) ?
+- HT/Hajek - computational complexity involved if we need to compute inclusion probability for all models based on updates (previous models and future models)
+- Basu (1971) suggests approach for PPSWOR (adaptation?)
 
 
-Using their knowledge of HT rediscovers the infamous harmonic mean estimator
+## Refinements
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- Need to avoid MCMC for pseudo Bayesian posteriors for
+    - learning proposal distribution in sample design for models
+    - estimation of posterior model probabilities in model-based approaches (ie sampling from predictive distribution)
+    - estimation of general quantities under BMA?
+    
+
+:::
+
+::: {.column width="40%"}
+![](img/turtles_all_the_way_down.jpeg)
+
+:::
+::::
 
 
-in process discovered Nott & Kohn ACMC 
-# adapt to Global Sampler
-
-can't have the infinite regret of designing a "MCMC" algorithm to learn the sampling probabilities of how to 
-avoid Hall of Mirrors (ie Bayes analysis of Bayes model based approach )
-
-![Turtles](turtles_all_the_way_down.jpeg)
-
-## advantages
-
-fewer runs
-escape locale modes ? vs Gibbs
+## Summary
 
 
-## Successive Sampling
+:::: {.columns}
 
-https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-43/issue-2/Asymptotic-Theory-for-Successive-Sampling-with-Varying-Probabilities-Without-Replacement/10.1214/aoms/1177692620.full
+::: {.column width="50%"}
+- Adaptive Independent Metropolis proposal for models (use in more complex IS)
+- Use observed values of unique marginal likelihoods of models for estimating posterior distribution
+- Bayes estimates of MC output 
 
-see adaptive normalized improvement Polson ref https://arxiv.org/pdf/2204.14121.pdf
-improves over HT/Hajek.
+- Basu's Elephants seem to be well, holding up the Bayesian World
+
+- and the Circus Statistician is still employed!
+
+
+
+:::
+
+::: {.column width="50%"}
+![](img/The_hindoo_earth.png)
+
+
+
+
+
+
+:::
+::::
+
+
+## References
+
+
+Meeden and Ghosh (1983) https://www.jstor.org/stable/2240483
+
+
+

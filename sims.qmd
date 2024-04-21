@@ -39,6 +39,34 @@ mse= function(yhat, ytrue) {
 }
 
 
+IHT.wts = function(obj) {
+  N.MC = eval(obj$call$MCMC.iterations)
+  inc.prob = 1 - (1 - obj$sampleprobs)^N.MC
+  rank.order = order(inc.prob)
+  n = length(inc.prob)
+  K = max((1:n)[inc.prob[rank.order] < 1/(1 + 1:n)])
+  thresh = (inc.prob[rank.order])[K]
+  inc.prob[inc.prob < thresh] = thresh
+  w = exp(obj$logmarg + log(obj$priorprobs))/inc.prob 
+  pp = w = w/sum(w)
+  models = which.matrix(obj$which, obj$n.vars)
+  probne0 = t(models) %*% pp
+  return(list(postprobs = pp, probne0 = probne0, inc.prob = inc.prob))
+}
+
+pp.IHT = IHT.wts(tecator.IS)
+
+HH.wts = function(obj) {
+  ni = obj$freq
+  inc.prob =  obj$sampleprobs
+  w = ni*exp(obj$logmarg + log(obj$priorprobs))/inc.prob 
+  pp = w = w/sum(w)
+  models = which.matrix(obj$which, obj$n.vars)
+  probne0 = t(models) %*% pp
+  return(list(postprobs = pp, probne0 = probne0, inc.prob = inc.prob))
+}
+
+pp.HH = HH.wts(tecator.IS)
 ```
 
 
@@ -165,7 +193,7 @@ system.time(bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha 
 
 
 ```{r}
-NSIM = 25
+NSIM = 100
 n.models = round(.05*2^p)
 
 time = matrix(NA, nrow = NSIM, ncol=3)
@@ -182,7 +210,7 @@ time[i, 1] = system.time(tecator.IS <- bas.lm(fat ~ ., data=data[, c(subsamp,101
                      method = "AMCMC", 
                      burnin.iterations = b.it, thin=100,
                      MCMC.iterations = mc.it,  lambda = 102, # renormalize = TRUE,
-                     delta = 0.01, n.models = n.models, importance.sampling = TRUE)
+                     delta = 0.01, n.models = mc.it, importance.sampling = TRUE)
 )[2]
 
 time[i,2] = system.time(tecator.amc <- bas.lm(fat ~ ., data=data[, c(subsamp,101)], prior="g-prior", alpha = 100, 
@@ -207,20 +235,44 @@ tecator.probne0$MCMC <-tecator.mcmc$probne0.MCMC
 
 
 bias.pip[i, ] <- apply(tecator.probne0,2, bias, tecator.probne0$TRUTH)[-1]
-mse.pip[i, ] <- apply(tecator.probne0,2, var, tecator.probne0$TRUTH, na.rm=TRUE)[-1]
+mse.pip[i, ] <- apply(tecator.probne0,2, mse, tecator.probne0$TRUTH)[-1]
 
 
 df.mod = data.frame(TRUTH = tecator.det$postprobs.RN, AIS=NA, AMCMC=NA, MCMC=NA)
 tecator.modelprobs = match.model(tecator.det, list(tecator.IS, tecator.amc, tecator.mcmc), df.mod)
 
 bias.pp[i,] <- apply(tecator.modelprobs,2, bias, tecator.modelprobs$TRUTH)[-1]
-mse.pp[i,] <- apply(tecator.modelprobs,2, mse, tecator.modelprobs$TRUTH, na.rm=TRUE)[-1]
+mse.pp[i,] <- apply(tecator.modelprobs,2, mse, tecator.modelprobs$TRUTH)[-1]
+print(mse.pip[i,])
+print(time[i,])
 }
 ```
 ```{r}
+out = which(mse.pp[,2] == max(mse.pp[,2]))
+mse.pp = mse.pp[-out,]
+mse.pip = mse.pip[-out,]
+bias.pp = bias.pp[-out,]
+bias.pip = bias.pip[-out,]
+```
+
+```{r}
+boxplot(mse.pp*1e7)
 ```
 
 
+```{r}
+boxplot(mse.pip*1e3)
+```
+
+
+```{r}
+boxplot(bias.pp)
+```
+
+
+```{r}
+boxplot(bias.pip)
+```
 ```{r}
 plot.modprobs = function(x,y, ...) {
   df = data.frame(x, y)

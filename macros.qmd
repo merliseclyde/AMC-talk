@@ -133,7 +133,7 @@ iid}}}}
 \def\tk{\boldsymbol{\theta}_k}
 \def\tj{\boldsymbol{\theta}_j}
 \def\Mk{\boldsymbol{{\cal M}}_k}
-\def\M{\boldsymbol{{\cal M}}}
+\def\M{{{\cal M}}}
 \def\Mj{\boldsymbol{{\cal M}}_j}
 \def\Mi{\boldsymbol{{\cal M}}_i}
 \def\Mg{{\boldsymbol{{\cal M}_\gamma}}}
